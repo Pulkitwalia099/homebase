@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --color-navy: #0A1628;
+  --color-navy-light: #1A2B4A;
+  --color-amber: #E8930C;
+  --color-amber-light: #FFF3E0;
+  --color-warm-white: #FAFAF8;
+  --color-cool-gray: #F3F4F6;
+  --color-dark: #111318;
+  --color-dark-card: #1A1D24;
+  --color-green: #10B981;
+}
+
+body {
+  background: var(--color-warm-white);
+  color: var(--color-navy);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Existing chat/product pages keep their own styling via Tailwind classes */
