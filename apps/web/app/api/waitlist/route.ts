@@ -5,12 +5,10 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { type, name, email, phone, company, zip_code, license_number, num_techs, use_case, referral_source } = body;
 
-    if (!type || !name) {
+    if (!type || !name || !email) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    // TODO: Insert into Supabase waitlist_signups table when configured
-    // For now, log and return success (graceful degradation for demo)
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
@@ -26,7 +24,7 @@ export async function POST(request: NextRequest) {
         body: JSON.stringify({
           type,
           name,
-          email: email || null,
+          email,
           phone: phone || null,
           company: company || null,
           zip_code: zip_code || null,
@@ -38,7 +36,9 @@ export async function POST(request: NextRequest) {
       });
 
       if (!res.ok) {
-        console.error("Supabase insert failed:", await res.text());
+        const errorText = await res.text();
+        console.error("Supabase insert failed:", errorText);
+        return NextResponse.json({ error: "Failed to save signup" }, { status: 500 });
       }
     } else {
       console.log("Waitlist signup (no Supabase configured):", { type, name, email });
@@ -47,6 +47,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Waitlist error:", error);
-    return NextResponse.json({ success: true }); // graceful degradation
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
