@@ -5,11 +5,20 @@ import Stripe from "stripe";
 // no need for the old `config = { api: { bodyParser: false } }` pattern.
 // Raw body is required for Stripe's webhook signature verification.
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2026-01-28.clover",
-});
+function getStripeServer() {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) throw new Error("STRIPE_SECRET_KEY is not set");
+  return new Stripe(key, { apiVersion: "2026-01-28.clover" });
+}
 
 export async function POST(request: NextRequest) {
+  let stripe: Stripe;
+  try {
+    stripe = getStripeServer();
+  } catch {
+    return NextResponse.json({ error: "Stripe not configured" }, { status: 500 });
+  }
+
   const body = await request.text(); // Raw body string — needed for signature check
   const sig = request.headers.get("stripe-signature");
 
