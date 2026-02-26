@@ -10,7 +10,7 @@ export default function Footer() {
             <div className="space-y-2">
               <Link href="/demo" className="block text-sm text-gray-500 hover:text-gray-300 transition-colors">Demo</Link>
               <Link href="/taxonomy" className="block text-sm text-gray-500 hover:text-gray-300 transition-colors">Taxonomy</Link>
-              <Link href="/chat" className="block text-sm text-gray-500 hover:text-gray-300 transition-colors">Try Chat</Link>
+              <Link href="/demo" className="block text-sm text-gray-500 hover:text-gray-300 transition-colors">Try Demo</Link>
             </div>
           </div>
           <div>

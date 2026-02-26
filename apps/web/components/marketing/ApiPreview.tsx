@@ -130,10 +130,10 @@ export default function ApiPreview() {
             Get API Access →
           </Link>
           <Link
-            href="/developers"
+            href="/taxonomy"
             className="text-sm font-medium text-gray-500 hover:text-gray-300 transition-colors"
           >
-            Read the Docs →
+            Browse Taxonomy →
           </Link>
         </div>
       </div>

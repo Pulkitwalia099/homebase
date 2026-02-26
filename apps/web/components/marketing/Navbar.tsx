@@ -73,7 +73,7 @@ export default function Navbar({ variant = "light", showStatusBar = false }: Nav
             </Link>
           ))}
           <Link
-            href="#waitlist"
+            href="/#waitlist"
             className={`text-sm font-medium px-4 py-2 rounded-lg transition-all duration-300 ${
               isDarkText
                 ? "bg-navy text-white hover:bg-navy-light"
@@ -123,7 +123,7 @@ export default function Navbar({ variant = "light", showStatusBar = false }: Nav
             </Link>
           ))}
           <Link
-            href="#waitlist"
+            href="/#waitlist"
             onClick={() => setMenuOpen(false)}
             className="inline-block mt-2 bg-navy text-white font-medium px-4 py-2 rounded-lg"
           >

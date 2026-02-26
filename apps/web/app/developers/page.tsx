@@ -71,7 +71,7 @@ export default function DevelopersPage() {
             <h2 className="text-2xl font-bold text-white mb-6">Endpoints Reference</h2>
             <p className="text-sm text-gray-500 font-mono mb-4">Base URL: https://api.homebase.ai/v1</p>
             <div className="overflow-x-auto rounded-xl border border-gray-700">
-              <table className="w-full text-sm">
+              <table className="w-full text-sm min-w-[500px]">
                 <thead>
                   <tr className="border-b border-gray-700 bg-dark-card">
                     <th className="text-left py-3 px-4 font-medium text-gray-500">Method</th>

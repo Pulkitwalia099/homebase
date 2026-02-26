@@ -48,7 +48,7 @@ export default function TaxonomyPage() {
 
               {/* Table */}
               <div className="overflow-x-auto rounded-xl border border-cool-gray bg-white">
-                <table className="w-full text-sm">
+                <table className="w-full text-sm min-w-[600px]">
                   <thead>
                     <tr className="border-b border-cool-gray bg-cool-gray/50">
                       <th className="text-left py-3 px-4 font-medium text-navy-light">Code</th>
