@@ -98,7 +98,7 @@ export default function QuotePage({ params }: { params: Promise<{ sessionId: str
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
             {/* Left — Quote Card */}
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-warm-lg overflow-hidden">
               <div className="p-6">
                 <h2 className="text-xl font-bold text-navy mb-1">{quote.job_code.name}</h2>
                 <p className="text-sm text-gray-500 mb-6">{quote.job_code.description}</p>
@@ -139,9 +139,15 @@ export default function QuotePage({ params }: { params: Promise<{ sessionId: str
                       {quote.price_breakdown.map((item, i) => (
                         <div key={i} className="flex justify-between text-sm">
                           <span className="text-gray-600">{item.label}</span>
-                          <span className="font-medium text-navy">${(item.amount_cents / 100).toFixed(0)}</span>
+                          <span className="font-medium text-navy">
+                            {i === 0 ? "" : "+"}${(item.amount_cents / 100).toFixed(0)}
+                          </span>
                         </div>
                       ))}
+                      <div className="flex justify-between text-sm border-t border-gray-200 pt-2 mt-2">
+                        <span className="font-semibold text-navy">Total</span>
+                        <span className="font-bold text-navy">${priceDollars}</span>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -182,7 +188,7 @@ export default function QuotePage({ params }: { params: Promise<{ sessionId: str
             {/* Right — Time slots + Pro card */}
             <div className="space-y-6">
               {/* Time slots */}
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-warm-lg p-6">
                 <h3 className="text-lg font-bold text-navy mb-4">Choose a time</h3>
                 <div className="space-y-2">
                   {TIME_SLOTS.map((slot) => (
@@ -191,7 +197,7 @@ export default function QuotePage({ params }: { params: Promise<{ sessionId: str
                       onClick={() => setSelectedSlot(slot.id)}
                       className={`w-full flex items-center justify-between px-4 py-3 rounded-xl border text-sm transition-all ${
                         selectedSlot === slot.id
-                          ? "border-amber bg-amber-light/50 text-navy"
+                          ? "border-amber bg-amber-light/50 text-navy ring-1 ring-amber/30"
                           : "border-gray-200 text-gray-700 hover:border-gray-300"
                       }`}
                     >
@@ -205,7 +211,7 @@ export default function QuotePage({ params }: { params: Promise<{ sessionId: str
               </div>
 
               {/* Pro card */}
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-warm-lg p-6">
                 <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Your Pro</p>
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 rounded-full bg-navy flex items-center justify-center text-white text-lg font-bold flex-shrink-0">
@@ -229,7 +235,7 @@ export default function QuotePage({ params }: { params: Promise<{ sessionId: str
               <button
                 onClick={handleContinue}
                 disabled={!selectedSlot}
-                className="w-full bg-navy hover:bg-navy-light disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-amber hover:bg-amber/90 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2"
               >
                 Continue to Booking
                 <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">

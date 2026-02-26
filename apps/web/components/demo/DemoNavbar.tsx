@@ -19,7 +19,7 @@ export function DemoNavbar({ step }: DemoNavbarProps) {
   const currentIndex = STEPS.findIndex((s) => s.key === step);
 
   return (
-    <nav className="bg-white border-b border-gray-200 px-4 py-3 flex-shrink-0">
+    <nav className="bg-white border-b border-gray-100 px-4 py-3 flex-shrink-0 shadow-warm">
       <div className="max-w-4xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="text-lg font-bold tracking-tight">
@@ -48,7 +48,7 @@ export function DemoNavbar({ step }: DemoNavbarProps) {
                       isCompleted
                         ? "bg-green text-white"
                         : isCurrent
-                        ? "bg-amber text-white"
+                        ? "bg-amber text-white shadow-[0_0_8px_rgba(232,147,12,0.5)]"
                         : "bg-gray-200 text-gray-400"
                     }`}
                   >

@@ -22,6 +22,7 @@ export interface ScopingQuoteData {
   final_price_cents: number;
   confidence_tier: ConfidenceTier;
   estimated_duration_min: number;
+  price_breakdown?: Array<{ label: string; amount_cents: number }>;
 }
 
 export interface ChatMessage {
@@ -61,6 +62,8 @@ export interface QuoteData {
     accessibility: boolean;
     after_hours: boolean;
     weekend: boolean;
+    same_day: boolean;
+    evening: boolean;
   };
 }
 

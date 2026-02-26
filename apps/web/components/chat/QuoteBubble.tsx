@@ -28,7 +28,7 @@ export function QuoteBubble({ quoteData, sessionId }: QuoteBubbleProps) {
       </div>
 
       {/* Card */}
-      <div className="max-w-[85%] bg-white border-2 border-navy/20 rounded-2xl rounded-tl-sm shadow-md overflow-hidden">
+      <div className="max-w-[85%] bg-white border border-navy/10 rounded-2xl rounded-tl-sm shadow-warm-lg overflow-hidden animate-fade-up">
         {/* Header strip */}
         <div className="bg-navy px-4 py-2.5 flex items-center gap-2">
           <svg className="w-4 h-4 text-green" viewBox="0 0 20 20" fill="currentColor">

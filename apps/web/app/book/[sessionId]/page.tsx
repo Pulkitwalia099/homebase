@@ -88,7 +88,7 @@ export default function BookPage({ params }: { params: Promise<{ sessionId: stri
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
             {/* Left — Form (2 cols) */}
-            <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+            <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-warm-lg p-6">
               <h2 className="text-xl font-bold text-navy mb-6">Your Information</h2>
 
               <div className="space-y-4">
@@ -166,11 +166,14 @@ export default function BookPage({ params }: { params: Promise<{ sessionId: stri
                 <p className="text-xs text-gray-400 mt-1">
                   We&apos;ll text job updates to your phone. No spam.
                 </p>
+                <p className="text-xs text-green font-medium mt-2">
+                  No payment required today — pay after service is complete.
+                </p>
 
                 <button
                   onClick={handleSubmit}
                   disabled={!isValid || isSubmitting}
-                  className="w-full bg-navy hover:bg-navy-light disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 mt-4"
+                  className="w-full bg-amber hover:bg-amber/90 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 mt-4"
                 >
                   {isSubmitting ? (
                     <>
@@ -193,7 +196,7 @@ export default function BookPage({ params }: { params: Promise<{ sessionId: stri
             </div>
 
             {/* Right — Order summary sidebar */}
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-warm-lg p-6">
               <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-4">Order Summary</h3>
 
               <div className="space-y-4">

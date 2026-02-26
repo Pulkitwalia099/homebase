@@ -15,6 +15,8 @@ interface ClassificationResult {
     accessibility: boolean;
     after_hours: boolean;
     weekend: boolean;
+    same_day: boolean;
+    evening: boolean;
   };
 }
 
@@ -93,6 +95,8 @@ function detectClassification(text: string): ClassificationResult | null {
             accessibility: Boolean(parsed.adjustment_flags.accessibility),
             after_hours: Boolean(parsed.adjustment_flags.after_hours),
             weekend: Boolean(parsed.adjustment_flags.weekend),
+            same_day: Boolean(parsed.adjustment_flags.same_day),
+            evening: Boolean(parsed.adjustment_flags.evening),
           },
         };
       }
@@ -125,10 +129,40 @@ function buildQuoteData(classification: ClassificationResult): ScopingQuoteData 
   if (!jobCode) return null;
 
   let priceCents = jobCode.base_price_cents;
-  if (classification.adjustment_flags.old_home) priceCents = Math.ceil(priceCents * 1.25);
-  if (classification.adjustment_flags.accessibility) priceCents += 4500;
-  if (classification.adjustment_flags.after_hours) priceCents += 7500;
-  if (classification.adjustment_flags.weekend) priceCents += 6500;
+  const breakdown: Array<{ label: string; amount_cents: number }> = [
+    { label: "Base service", amount_cents: jobCode.base_price_cents },
+  ];
+
+  // Multiplier: old_home ×1.15
+  if (classification.adjustment_flags.old_home) {
+    const adj = Math.ceil(jobCode.base_price_cents * 0.15);
+    priceCents += adj;
+    breakdown.push({ label: "Older home adjustment", amount_cents: adj });
+  }
+
+  // Flat add: accessibility +$25
+  if (classification.adjustment_flags.accessibility) {
+    priceCents += 2500;
+    breakdown.push({ label: "Limited access", amount_cents: 2500 });
+  }
+
+  // Timing surcharges — don't stack, use the highest one
+  const timingSurcharges = [
+    { flag: "after_hours" as const, label: "After-hours service", cents: 4500 },
+    { flag: "same_day" as const, label: "Same-day service", cents: 3500 },
+    { flag: "evening" as const, label: "Evening service", cents: 3000 },
+    { flag: "weekend" as const, label: "Weekend service", cents: 2500 },
+  ];
+
+  const activeTiming = timingSurcharges
+    .filter((s) => classification.adjustment_flags[s.flag])
+    .sort((a, b) => b.cents - a.cents);
+
+  if (activeTiming.length > 0) {
+    const highest = activeTiming[0];
+    priceCents += highest.cents;
+    breakdown.push({ label: highest.label, amount_cents: highest.cents });
+  }
 
   return {
     job_code: jobCode.code,
@@ -136,6 +170,7 @@ function buildQuoteData(classification: ClassificationResult): ScopingQuoteData 
     final_price_cents: priceCents,
     confidence_tier: getConfidenceTier(classification.confidence),
     estimated_duration_min: jobCode.estimated_duration_min,
+    price_breakdown: breakdown,
   };
 }
 

@@ -40,22 +40,36 @@ export async function GET(
       { label: "Base service", amount_cents: jobCode.base_price_cents },
     ];
 
+    // Multiplier: old_home ×1.15
     if (cls.adjustment_flags.old_home) {
-      const adjustment = Math.ceil(jobCode.base_price_cents * 0.25);
-      finalPriceCents = Math.ceil(finalPriceCents * 1.25);
+      const adjustment = Math.ceil(jobCode.base_price_cents * 0.15);
+      finalPriceCents += adjustment;
       priceBreakdown.push({ label: "Older home adjustment", amount_cents: adjustment });
     }
+
+    // Flat add: accessibility +$25
     if (cls.adjustment_flags.accessibility) {
-      finalPriceCents += 4500;
-      priceBreakdown.push({ label: "Limited access", amount_cents: 4500 });
+      finalPriceCents += 2500;
+      priceBreakdown.push({ label: "Limited access", amount_cents: 2500 });
     }
-    if (cls.adjustment_flags.after_hours) {
-      finalPriceCents += 7500;
-      priceBreakdown.push({ label: "After-hours service", amount_cents: 7500 });
-    }
-    if (cls.adjustment_flags.weekend) {
-      finalPriceCents += 6500;
-      priceBreakdown.push({ label: "Weekend service", amount_cents: 6500 });
+
+    // Timing surcharges — don't stack, use the highest one
+    const timingSurcharges = [
+      { flag: "after_hours" as const, label: "After-hours service", cents: 4500 },
+      { flag: "same_day" as const, label: "Same-day service", cents: 3500 },
+      { flag: "evening" as const, label: "Evening service", cents: 3000 },
+      { flag: "weekend" as const, label: "Weekend service", cents: 2500 },
+    ];
+
+    const flags = cls.adjustment_flags as Record<string, boolean>;
+    const activeTiming = timingSurcharges
+      .filter((s) => flags[s.flag])
+      .sort((a, b) => b.cents - a.cents);
+
+    if (activeTiming.length > 0) {
+      const highest = activeTiming[0];
+      finalPriceCents += highest.cents;
+      priceBreakdown.push({ label: highest.label, amount_cents: highest.cents });
     }
 
     const confidenceTier =

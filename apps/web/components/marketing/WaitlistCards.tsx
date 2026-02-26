@@ -39,7 +39,9 @@ export default function WaitlistCards() {
             <div className="text-2xl mb-3">🏠</div>
             <h3 className="text-lg font-bold text-navy">Homeowners & Property Managers</h3>
             <p className="text-sm text-gray-500 mt-2 flex-1">
-              Get guaranteed-price plumbing in Boston. No surprises. Vetted pros.
+              Guaranteed pricing before you book<br />
+              Booked in under 2 minutes — no calls, no back-and-forth<br />
+              No surprises. Ever.
             </p>
             {activeForm === "homeowner" ? (
               <div className="mt-5">
@@ -60,7 +62,9 @@ export default function WaitlistCards() {
             <div className="text-2xl mb-3">🔧</div>
             <h3 className="text-lg font-bold text-navy">Pros & Home Service Businesses</h3>
             <p className="text-sm text-gray-500 mt-2 flex-1">
-              Confirmed jobs, not shared leads. Fair prices. Same-week payouts.
+              Pre-paid jobs, not leads<br />
+              1/10th the CAC of Google Ads<br />
+              1/5th the cost of Thumbtack &amp; Angi
             </p>
             {activeForm === "pro" ? (
               <div className="mt-5">
@@ -85,7 +89,9 @@ export default function WaitlistCards() {
             <div className="text-2xl mb-3">🤖</div>
             <h3 className="text-lg font-bold text-white">Developers & Platforms</h3>
             <p className="text-sm text-gray-400 mt-2">
-              Build with the home services API. Scope, price, book via code.
+              Scope, price, and book in one API call<br />
+              10x fewer tokens than DIY chains<br />
+              Sub-second classification, 95%+ accuracy
             </p>
 
             {/* Use case pills — visible on hover (desktop) or always (mobile) */}

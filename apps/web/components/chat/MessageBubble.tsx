@@ -70,7 +70,7 @@ export function MessageBubble({ message, sessionId, onSend, isLast, isLoading }:
   const hasBubble = !!intro || hasBullets;
 
   return (
-    <div className={`flex items-start gap-3 mb-4 ${isUser ? "flex-row-reverse" : ""}`}>
+    <div className={`flex items-start gap-3 mb-4 animate-fade-up ${isUser ? "flex-row-reverse" : ""}`}>
       {/* Avatar */}
       {!isUser && (
         <div className="w-8 h-8 rounded-full bg-navy flex items-center justify-center flex-shrink-0 text-amber text-xs font-bold mt-0.5">
@@ -78,14 +78,14 @@ export function MessageBubble({ message, sessionId, onSend, isLast, isLoading }:
         </div>
       )}
 
-      <div className={`flex flex-col gap-2 ${isUser ? "items-end" : "items-start"} max-w-[80%]`}>
+      <div className={`flex flex-col gap-2 ${isUser ? "items-end" : "items-start"} max-w-[85%] sm:max-w-[80%]`}>
         {/* Main bubble — intro text + any long descriptive bullets as prose */}
         {hasBubble && (
           <div
-            className={`px-4 py-3 rounded-2xl shadow-sm text-sm leading-relaxed ${
+            className={`px-4 py-3 rounded-2xl text-sm leading-relaxed ${
               isUser
                 ? "bg-navy text-white rounded-tr-sm"
-                : "bg-white border border-gray-200 text-navy rounded-tl-sm"
+                : "bg-white border border-gray-100 text-navy rounded-tl-sm shadow-warm"
             }`}
           >
             {intro && <RichText text={intro} />}
@@ -110,9 +110,9 @@ export function MessageBubble({ message, sessionId, onSend, isLast, isLoading }:
                 key={i}
                 onClick={() => onSend?.(opt)}
                 disabled={!isLast || isLoading || !onSend}
-                className={`px-3 py-1.5 rounded-full border text-sm transition-colors ${
+                className={`px-3 py-1.5 rounded-full border text-sm transition-all duration-150 ${
                   isLast && !isLoading && onSend
-                    ? "bg-white border-amber/40 text-navy hover:bg-amber-light cursor-pointer"
+                    ? "bg-white border-amber/40 text-navy hover:bg-amber-light hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                     : "bg-gray-50 border-gray-200 text-gray-400 cursor-default"
                 }`}
               >

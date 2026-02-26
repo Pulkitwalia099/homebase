@@ -55,9 +55,10 @@ export default function ConfirmationPage({ params }: { params: Promise<{ session
         <div className="max-w-lg mx-auto">
           {/* Success header */}
           <div className="text-center mb-8">
-            <div className="w-20 h-20 bg-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-20 h-20 bg-green/10 rounded-full flex items-center justify-center mx-auto mb-4 animate-check-pulse">
               <svg className="w-10 h-10 text-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <circle cx="12" cy="12" r="9" className="opacity-20" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75" className="animate-check-draw" />
               </svg>
             </div>
             <h1 className="text-2xl font-bold text-navy mb-1">You&apos;re Booked!</h1>
@@ -91,7 +92,7 @@ export default function ConfirmationPage({ params }: { params: Promise<{ session
           </div>
 
           {/* Summary card */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-6">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-warm-lg overflow-hidden mb-6 animate-fade-up">
             <div className="p-6 space-y-4">
               {/* Service */}
               <div>
