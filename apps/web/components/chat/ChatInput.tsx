@@ -44,7 +44,7 @@ export function ChatInput({
 
   return (
     <div className="border-t border-gray-200 bg-white px-4 py-3">
-      <div className="flex items-end gap-2 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2 focus-within:border-blue-400 focus-within:ring-1 focus-within:ring-blue-400 transition-all">
+      <div className="flex items-end gap-2 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2 focus-within:border-amber focus-within:ring-1 focus-within:ring-amber/40 transition-all">
         <textarea
           ref={textareaRef}
           value={value}
@@ -59,7 +59,7 @@ export function ChatInput({
         <button
           onClick={handleSend}
           disabled={disabled || !value.trim()}
-          className="mb-0.5 p-1.5 rounded-xl bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex-shrink-0"
+          className="mb-0.5 p-1.5 rounded-xl bg-navy text-white hover:bg-navy-light disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex-shrink-0"
           aria-label="Send message"
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>

@@ -1,18 +1,14 @@
 /**
- * Typed API client — all calls go through the Next.js proxy (/api/chat)
- * or directly to FastAPI (server-side calls from Server Components).
+ * Typed API client — all calls go through Next.js API routes.
+ * No external backend needed — everything runs on Vercel.
  */
-import type { ApiResponse, ScopingResponse, QuoteData, BookingRequest, BookingResponse } from "./types";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/v1";
+import type { ApiResponse, ScopingResponse, QuoteData } from "./types";
 
 async function request<T>(
   path: string,
   options: RequestInit = {}
 ): Promise<ApiResponse<T>> {
-  const url = `${API_URL}${path}`;
-
-  const res = await fetch(url, {
+  const res = await fetch(path, {
     ...options,
     headers: {
       "Content-Type": "application/json",
@@ -29,10 +25,7 @@ async function request<T>(
     };
   }
 
-  // FastAPI returns { data, error } envelope
   if ("data" in json) return json as ApiResponse<T>;
-
-  // If FastAPI returns unwrapped, wrap it
   return { data: json as T, error: null };
 }
 
@@ -41,9 +34,9 @@ async function request<T>(
 export async function startScopingSession(
   initialMessage: string
 ): Promise<ApiResponse<ScopingResponse>> {
-  return request<ScopingResponse>("/scoping/start", {
+  return request<ScopingResponse>("/api/scoping/start", {
     method: "POST",
-    body: JSON.stringify({ initial_message: initialMessage, channel: "web" }),
+    body: JSON.stringify({ initial_message: initialMessage }),
   });
 }
 
@@ -51,37 +44,14 @@ export async function sendScopingMessage(
   sessionId: string,
   message: string
 ): Promise<ApiResponse<ScopingResponse>> {
-  return request<ScopingResponse>("/scoping/message", {
+  return request<ScopingResponse>(`/api/scoping/${sessionId}/message`, {
     method: "POST",
-    body: JSON.stringify({ session_id: sessionId, message }),
+    body: JSON.stringify({ message }),
   });
 }
 
 // ── Quotes ────────────────────────────────────
 
 export async function getQuote(sessionId: string): Promise<ApiResponse<QuoteData>> {
-  return request<QuoteData>(`/quotes/${sessionId}`);
-}
-
-// ── Bookings ──────────────────────────────────
-
-export async function createBooking(
-  booking: BookingRequest
-): Promise<ApiResponse<BookingResponse>> {
-  return request<BookingResponse>("/bookings", {
-    method: "POST",
-    body: JSON.stringify(booking),
-  });
-}
-
-// ── Pros ──────────────────────────────────────
-
-export async function acceptJob(
-  jobId: string,
-  token: string
-): Promise<ApiResponse<{ confirmed: boolean }>> {
-  return request<{ confirmed: boolean }>(`/pros/jobs/${jobId}/accept`, {
-    method: "POST",
-    body: JSON.stringify({ token }),
-  });
+  return request<QuoteData>(`/api/scoping/${sessionId}/quote`);
 }

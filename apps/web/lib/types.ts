@@ -55,6 +55,7 @@ export interface QuoteData {
   }>;
   whats_included: string[];
   confidence_tier: ConfidenceTier;
+  diagnosis_summary?: string;
   adjustment_flags: {
     old_home: boolean;
     accessibility: boolean;

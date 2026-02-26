@@ -2,7 +2,7 @@ export function TypingIndicator() {
   return (
     <div className="flex items-start gap-3 mb-4">
       {/* Avatar */}
-      <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0 text-white text-xs font-bold">
+      <div className="w-8 h-8 rounded-full bg-navy flex items-center justify-center flex-shrink-0 text-amber text-xs font-bold">
         HB
       </div>
       {/* Dots */}

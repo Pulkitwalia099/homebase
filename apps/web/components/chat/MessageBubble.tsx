@@ -73,7 +73,7 @@ export function MessageBubble({ message, sessionId, onSend, isLast, isLoading }:
     <div className={`flex items-start gap-3 mb-4 ${isUser ? "flex-row-reverse" : ""}`}>
       {/* Avatar */}
       {!isUser && (
-        <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0 text-white text-xs font-bold mt-0.5">
+        <div className="w-8 h-8 rounded-full bg-navy flex items-center justify-center flex-shrink-0 text-amber text-xs font-bold mt-0.5">
           HB
         </div>
       )}
@@ -84,8 +84,8 @@ export function MessageBubble({ message, sessionId, onSend, isLast, isLoading }:
           <div
             className={`px-4 py-3 rounded-2xl shadow-sm text-sm leading-relaxed ${
               isUser
-                ? "bg-blue-600 text-white rounded-tr-sm"
-                : "bg-white border border-gray-200 text-gray-800 rounded-tl-sm"
+                ? "bg-navy text-white rounded-tr-sm"
+                : "bg-white border border-gray-200 text-navy rounded-tl-sm"
             }`}
           >
             {intro && <RichText text={intro} />}
@@ -112,7 +112,7 @@ export function MessageBubble({ message, sessionId, onSend, isLast, isLoading }:
                 disabled={!isLast || isLoading || !onSend}
                 className={`px-3 py-1.5 rounded-full border text-sm transition-colors ${
                   isLast && !isLoading && onSend
-                    ? "bg-white border-blue-300 text-blue-700 hover:bg-blue-50 cursor-pointer"
+                    ? "bg-white border-amber/40 text-navy hover:bg-amber-light cursor-pointer"
                     : "bg-gray-50 border-gray-200 text-gray-400 cursor-default"
                 }`}
               >
