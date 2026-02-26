@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { ChatMessage, ScopingQuoteData } from "@/lib/types";
 import { startScopingSession, sendScopingMessage } from "@/lib/api-client";
 
@@ -42,6 +42,7 @@ export function useChat() {
   // isMounted becomes true after the first client-side render is complete.
   // Used to defer any localStorage-dependent UI until after hydration.
   const [isMounted, setIsMounted] = useState(false);
+  const prefillHandled = useRef(false);
 
   useEffect(() => {
     const stored = loadFromStorage();
@@ -51,6 +52,22 @@ export function useChat() {
     }
     setIsMounted(true);
   }, []);
+
+  // Check for a prefilled message from the /demo page and auto-send it
+  useEffect(() => {
+    if (!isMounted || prefillHandled.current) return;
+    prefillHandled.current = true;
+
+    try {
+      const prefill = sessionStorage.getItem("hb_prefill");
+      if (prefill) {
+        sessionStorage.removeItem("hb_prefill");
+        // Small delay to let the UI render the greeting first
+        setTimeout(() => sendMessage(prefill), 300);
+      }
+    } catch { /* ignore */ }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMounted]);
 
   // Wrapper that sets state and persists in one call
   const updateMessages = (msgs: ChatMessage[], sid: string | null) => {

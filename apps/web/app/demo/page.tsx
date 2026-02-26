@@ -1,13 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Navbar from "../../components/marketing/Navbar";
 import Footer from "../../components/marketing/Footer";
-import DemoChat from "../../components/marketing/DemoChat";
-import { scenarios, type DemoScenario } from "../../lib/demo-scenarios";
+import { scenarios } from "../../lib/demo-scenarios";
 
 export default function DemoPage() {
-  const [activeScenario, setActiveScenario] = useState<DemoScenario | null>(null);
+  const router = useRouter();
+  const [customIssue, setCustomIssue] = useState("");
+
+  const goToChat = (message: string) => {
+    // Clear any existing chat so we start fresh with the prefilled message
+    try { localStorage.removeItem("homebase_chat"); } catch { /* ignore */ }
+    sessionStorage.setItem("hb_prefill", message);
+    router.push("/chat");
+  };
 
   return (
     <div className="min-h-screen bg-warm-white">
@@ -23,54 +31,44 @@ export default function DemoPage() {
             </p>
           </div>
 
-          {!activeScenario ? (
-            <>
-              {/* Scenario cards */}
-              <div className="grid sm:grid-cols-2 gap-4 mb-8">
-                {scenarios.map((s) => (
-                  <button
-                    key={s.id}
-                    onClick={() => setActiveScenario(s)}
-                    className="text-left p-5 rounded-xl border border-cool-gray bg-white hover:border-amber/50 hover:shadow-md transition-all"
-                  >
-                    <span className="text-2xl">{s.emoji}</span>
-                    <h3 className="mt-2 font-bold text-navy">{s.title}</h3>
-                    <p className="text-sm text-navy-light mt-1">{s.subtitle}</p>
-                  </button>
-                ))}
-              </div>
-
-              {/* Free-form input (UI only) */}
-              <div className="rounded-xl border border-cool-gray bg-white p-4">
-                <p className="text-sm text-navy-light mb-3">Or describe your own issue:</p>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    placeholder="e.g. My water heater is making weird noises..."
-                    className="flex-1 px-3 py-2 rounded-lg border border-cool-gray text-sm focus:outline-none focus:ring-2 focus:ring-amber/50"
-                    disabled
-                  />
-                  <button
-                    disabled
-                    className="px-4 py-2 bg-cool-gray text-navy-light rounded-lg text-sm cursor-not-allowed"
-                  >
-                    Coming Soon
-                  </button>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="max-w-lg mx-auto">
-              {/* Back button */}
+          {/* Scenario cards */}
+          <div className="grid sm:grid-cols-2 gap-4 mb-8">
+            {scenarios.map((s) => (
               <button
-                onClick={() => setActiveScenario(null)}
-                className="mb-4 text-sm text-navy-light hover:text-navy transition-colors"
+                key={s.id}
+                onClick={() => goToChat(s.messages[0].content)}
+                className="text-left p-5 rounded-xl border border-cool-gray bg-white hover:border-amber/50 hover:shadow-md transition-all"
               >
-                ← Choose a different scenario
+                <span className="text-2xl">{s.emoji}</span>
+                <h3 className="mt-2 font-bold text-navy">{s.title}</h3>
+                <p className="text-sm text-navy-light mt-1">{s.subtitle}</p>
               </button>
-              <DemoChat scenario={activeScenario} onReset={() => setActiveScenario(null)} />
+            ))}
+          </div>
+
+          {/* Free-form input */}
+          <div className="rounded-xl border border-cool-gray bg-white p-4">
+            <p className="text-sm text-navy-light mb-3">Or describe your own issue:</p>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={customIssue}
+                onChange={(e) => setCustomIssue(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && customIssue.trim()) goToChat(customIssue.trim());
+                }}
+                placeholder="e.g. My water heater is making weird noises..."
+                className="flex-1 px-3 py-2 rounded-lg border border-cool-gray text-sm focus:outline-none focus:ring-2 focus:ring-amber/50"
+              />
+              <button
+                onClick={() => customIssue.trim() && goToChat(customIssue.trim())}
+                disabled={!customIssue.trim()}
+                className="px-4 py-2 bg-navy text-white rounded-lg text-sm hover:bg-navy-light disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              >
+                Start Chat →
+              </button>
             </div>
-          )}
+          </div>
         </div>
       </main>
 
