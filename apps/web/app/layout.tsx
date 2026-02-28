@@ -17,7 +17,7 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://homebase.ai"),
   title: {
-    default: "HomeBase — Plumbing Services in Boston | AI-Powered Booking",
+    default: "HomeBase — The API for Home Services",
     template: "%s | HomeBase",
   },
   description:
@@ -42,9 +42,9 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "HomeBase",
     locale: "en_US",
-    title: "HomeBase — Plumbing Services in Boston | AI-Powered Booking",
+    title: "HomeBase — The API for Home Services",
     description:
-      "Book trusted, licensed plumbers in Boston with guaranteed pricing. AI-powered scoping, instant quotes, vetted pros.",
+      "Scope, price, and book home services programmatically. AI-powered scoping, guaranteed pricing, vetted pros.",
   },
   twitter: {
     card: "summary_large_image",
