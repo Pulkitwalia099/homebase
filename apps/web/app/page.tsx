@@ -4,6 +4,7 @@ import Navigation from "@/components/golocal/Navigation";
 import Footer from "@/components/golocal/Footer";
 import BookingDemo from "@/components/golocal/BookingDemo";
 import ConnectionMap from "@/components/golocal/ConnectionMap";
+export const metadata = { alternates: { canonical: "/" } };
 const audiences = [
   { number: "01", label: "LOCAL BUSINESSES", title: "Meet your next customer’s agent.", copy: "Make your business part of the new way people find and book local services. Start with the software and workflows you already use.", href: "/businesses", cta: "Register your business", icon: "↗" },
   { number: "02", label: "AGENT COMPANIES", title: "Give your agent a local network.", copy: "Connect to participating businesses through a shared booking layer. Help your users move from a request to a confirmed appointment.", href: "/agents", cta: "Become an agent partner", icon: "⌘" },
