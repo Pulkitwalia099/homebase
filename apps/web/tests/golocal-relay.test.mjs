@@ -74,3 +74,12 @@ test('public documentation uses GoLocal relay URLs and excludes unrelated tools 
   assert.deepEqual(data.tools.map(t => t.name), ['connector_status']);
   assert.equal(data.secret, undefined);
 });
+
+test('explicit hosted mode uses only the fixed hosted origin and still requires the same verifier',async()=>{
+ let calls=0;
+ const relay=make({hosted:true,expiresAt:undefined,fetchFn:async(url)=>{calls++;assert.equal(url,'https://api.getgolocal.com/api/tools');return Response.json({tools:[]});}});
+ assert.equal((await relay(req('tools'),['tools'])).status,200);assert.equal(calls,1);
+ const denied=make({hosted:true,keyHash:'b'.repeat(64),fetchFn:async()=>{throw new Error('must not forward');}});
+ assert.equal((await denied(req('tools'),['tools'])).status,401);
+ assert.equal((await make({expiresAt:undefined})(req('tools'),['tools'])).status,503);
+});

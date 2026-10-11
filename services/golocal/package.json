@@ -1,0 +1,21 @@
+{
+  "name": "golocal-connector-pilot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/server.js",
+    "test": "node --test test/*.test.js",
+    "smoke": "node --env-file-if-exists=.env scripts/smoke.js",
+    "setup": "node scripts/setup.js",
+    "access": "node --env-file-if-exists=.env scripts/access.js",
+    "inspect-jobber": "node --env-file-if-exists=.env scripts/inspect-jobber.js",
+    "inspect-housecall": "node --env-file-if-exists=.env scripts/inspect-housecall.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.1",
+    "express": "5.2.1",
+    "zod": "^4.0.0"
+  }
+}

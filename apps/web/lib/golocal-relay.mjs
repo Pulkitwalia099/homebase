@@ -1,6 +1,7 @@
 import { createHash, timingSafeEqual } from 'node:crypto';
 
 const UPSTREAM = 'https://camryn-mechanomorphic-ellis.ngrok-free.dev';
+const HOSTED_UPSTREAM = 'https://api.getgolocal.com';
 const PUBLIC_BASE = 'https://getgolocal.com/api/connector';
 const TOOLS = new Set(['connector_status', 'housecall_company', 'housecall_list_jobs', 'prepare_housecall_test_booking', 'confirm_housecall_test_booking', 'housecall_test_booking_status', 'unschedule_housecall_test_booking']);
 const LIMIT = 32768;
@@ -27,7 +28,7 @@ async function boundedBody(request) {
 }
 
 // This relay holds only a credential verifier. The vendor key and durable state stay upstream.
-export function createGoLocalRelay({ keyHash, expiresAt, fetchFn = fetch, now = Date.now }) {
+export function createGoLocalRelay({ keyHash, expiresAt, hosted = false, fetchFn = fetch, now = Date.now }) {
   return async function relay(request, path) {
     const url = new URL(request.url);
     if (url.search) return result({ code: 'INVALID_INPUT' }, 400);
@@ -39,8 +40,8 @@ export function createGoLocalRelay({ keyHash, expiresAt, fetchFn = fetch, now = 
     if (!publicDocs && !discovery && !call) return result({ code: 'NOT_FOUND' }, 404);
     if (!publicDocs) {
       const deadline = Date.parse(expiresAt || '');
-      if (!/^[a-f0-9]{64}$/.test(keyHash || '') || !Number.isFinite(deadline) || deadline > now() + 86400000) return result({ code: 'RELAY_DISABLED' }, 503);
-      if (deadline <= now()) return result({ code: 'ACCESS_EXPIRED' }, 401);
+      if (!/^[a-f0-9]{64}$/.test(keyHash || '') || (!hosted && (!Number.isFinite(deadline) || deadline > now() + 86400000))) return result({ code: 'RELAY_DISABLED' }, 503);
+      if (!hosted && deadline <= now()) return result({ code: 'ACCESS_EXPIRED' }, 401);
       const authorization = request.headers.get('authorization') || '';
       const token = authorization.match(/^Bearer ([a-f0-9]{64})$/)?.[1];
       if (!token || !timingSafeEqual(Buffer.from(createHash('sha256').update(token).digest('hex')), Buffer.from(keyHash))) return result({ code: 'UNAUTHORIZED' }, 401);
@@ -57,11 +58,11 @@ export function createGoLocalRelay({ keyHash, expiresAt, fetchFn = fetch, now = 
     if (!publicDocs) outboundHeaders.Authorization = request.headers.get('authorization');
     if (call) outboundHeaders['Content-Type'] = 'application/json';
     try {
-      const upstream = await fetchFn(UPSTREAM + target, { method: call ? 'POST' : 'GET', headers: outboundHeaders, body, redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(20000) });
+      const upstream = await fetchFn((hosted ? HOSTED_UPSTREAM : UPSTREAM) + target, { method: call ? 'POST' : 'GET', headers: outboundHeaders, body, redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(20000) });
       const data = await upstream.json();
       if (publicDocs) {
         if (!upstream.ok || !Array.isArray(data.tools) || data.backend !== 'housecall') throw new Error('Unavailable documentation');
-        return result({ name: 'GoLocal', environment: 'private Housecall test pilot', api: { listTools: PUBLIC_BASE + '/tools', callTool: PUBLIC_BASE + '/tools/{name}', method: 'POST', body: 'Exact tool input-schema JSON object', auth: 'Authorization: Bearer <securely stored GoLocal test credential>' }, permissions: 'Seven bounded tools; approve each write. One-day existing credential only. Vendor key remains on the local GoLocal backend.', constraints: ['One bound test company, fictional customers and $0 synthetic jobs.', 'No service fulfillment, messages, dispatch, work-start or payments.', 'Schedule removal does not cancel the job.', 'No automatic retry after unknown write outcome.', 'Relay still depends on the local server and ngrok tunnel.'], tools: data.tools.filter(t => TOOLS.has(t.name)).map(t => ({ name: t.name, description: t.description, annotations: t.annotations, inputSchema: t.inputSchema })) });
+        return result({ name: 'GoLocal', environment: 'private Housecall test pilot', api: { listTools: PUBLIC_BASE + '/tools', callTool: PUBLIC_BASE + '/tools/{name}', method: 'POST', body: 'Exact tool input-schema JSON object', auth: 'Authorization: Bearer <securely stored GoLocal test credential>' }, permissions: hosted ? 'Seven bounded tools; approve each write. Revocable credential without daily expiry. Vendor key remains on the hosted GoLocal backend.' : 'Seven bounded tools; approve each write. One-day existing credential only. Vendor key remains on the local GoLocal backend.', constraints: ['One bound test company, fictional customers and $0 synthetic jobs.', 'No service fulfillment, messages, dispatch, work-start or payments.', 'Schedule removal does not cancel the job.', 'No automatic retry after unknown write outcome.', hosted ? 'Hosted backend uses persistent encrypted storage; vendor trial/access limits still apply.' : 'Relay still depends on the local server and ngrok tunnel.'], tools: data.tools.filter(t => TOOLS.has(t.name)).map(t => ({ name: t.name, description: t.description, annotations: t.annotations, inputSchema: t.inputSchema })) });
       }
       return result(data, upstream.status);
     } catch {

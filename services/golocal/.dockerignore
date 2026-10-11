@@ -1,0 +1,8 @@
+*
+!package.json
+!package-lock.json
+!Dockerfile
+!src/
+!src/**
+!scripts/
+!scripts/hosted-start.sh

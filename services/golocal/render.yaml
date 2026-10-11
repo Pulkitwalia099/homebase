@@ -1,0 +1,52 @@
+services:
+  - type: web
+    name: golocal-connector
+    runtime: docker
+    rootDir: services/golocal
+    plan: starter
+    region: ohio
+    numInstances: 1
+    autoDeployTrigger: off
+    healthCheckPath: /health
+    maxShutdownDelaySeconds: 60
+    disk:
+      name: golocal-state
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: GOLOCAL_HOSTED
+        value: "true"
+      - key: HOST
+        value: "0.0.0.0"
+      - key: PORT
+        value: "10000"
+      - key: DATA_DIR
+        value: /var/data/golocal
+      - key: BACKEND
+        value: housecall
+      - key: ENABLE_DOTS_OAUTH
+        value: "true"
+      - key: ENABLE_HOUSECALL_TEST_WRITES
+        value: "true"
+      - key: GOLOCAL_HOSTED_KEY_ENABLED
+        value: "true"
+      - key: PUBLIC_BASE_URL
+        sync: false
+      - key: MCP_BEARER_TOKEN
+        sync: false
+      - key: ADMIN_TOKEN
+        sync: false
+      - key: DATA_ENCRYPTION_KEY
+        sync: false
+      - key: HOUSECALL_API_KEY
+        sync: false
+      - key: HOUSECALL_TEST_COMPANY_ID
+        sync: false
+      - key: HOUSECALL_TEST_OWNER_ID
+        sync: false
+      - key: GOLOCAL_HOSTED_COMPANY_ID
+        sync: false
+      - key: GOLOCAL_HOSTED_KEY_SHA256
+        sync: false
+      - key: GOLOCAL_BOOTSTRAP_STATE_BASE64
+        sync: false
