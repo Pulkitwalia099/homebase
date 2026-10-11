@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import AnimatedHero from "@/components/golocal/AnimatedHero";
 import Navigation from "@/components/golocal/Navigation";
 import Footer from "@/components/golocal/Footer";
 import BookingDemo from "@/components/golocal/BookingDemo";
@@ -20,7 +20,7 @@ const faqs = [
 ];
 export default function Home() {
   return <><Navigation /><main id="main">
-    <section className="gl-hero"><Image className="gl-hero-art" src="/brand/local-services.png" alt="A neighborhood of local service professionals caring for homes, from plumbing to roofing and gardening" fill priority sizes="100vw" /><div className="gl-hero-shade" /><div className="gl-container gl-hero-inner"><div className="gl-hero-copy"><p className="gl-eyebrow gl-eyebrow-light"><span className="gl-live-dot" /> THE NEXT CHAPTER OF LOCAL</p><h1>Local services,<br />ready for the<br /><em>agent era.</em></h1><p className="gl-hero-description">One connection between personal AI agents and the local businesses that get things done.</p><div className="gl-actions"><Link className="gl-button gl-button-orange" href="/register?type=business">Register your business <span aria-hidden="true">↗</span></Link><Link className="gl-hero-link" href="#network">Partner with us <span aria-hidden="true">→</span></Link></div><p className="gl-hero-note">Now welcoming businesses, agent companies and channel partners.</p></div><div className="gl-hero-caption"><span className="gl-caption-star">✳</span><span>Real local expertise.<br /><b>A new way to connect.</b></span></div></div></section>
+    <AnimatedHero />
     <div className="gl-launch-strip"><div className="gl-container"><span><span className="gl-live-dot" /> STARTING LOCAL. BUILDING TOGETHER.</span><span>Salt Lake City <i>/</i> Plumbing pilot <i>/</i> Open for partners <span aria-hidden="true">↗</span></span></div></div>
     <section className="gl-section gl-container gl-intro"><p className="gl-eyebrow">A NEW WAY TO FIND LOCAL</p><div><h2>People are asking their agents.<br /><span className="gl-muted">Let’s give them somewhere to book.</span></h2><p>Personal agents are becoming another starting point for everyday services. But booking a local business still means piecing together websites, forms and phone calls.</p><p>GoLocal is building a shared network of participating businesses, with the service information and booking connections agents need to turn a customer’s request into an appointment.</p></div></section>
     <section className="gl-connection-section"><div className="gl-container"><div className="gl-section-heading"><div><p className="gl-eyebrow">THE SHARED BOOKING LAYER</p><h2>Many agents. Local expertise.<br /><em>One connection.</em></h2></div><p>Explore each part of the network.<br />See what moves between them.</p></div><ConnectionMap /><Link className="gl-text-link" href="/connectors">How the connections work <span aria-hidden="true">↗</span></Link></div></section>
