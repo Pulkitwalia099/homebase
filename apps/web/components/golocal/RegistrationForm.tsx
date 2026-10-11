@@ -31,7 +31,7 @@ export default function RegistrationForm({ initialType }: { initialType: Audienc
     {type === "partner" && <label className="gl-field">Tell us about your business network<textarea name="use_case" required maxLength={2000} rows={4} placeholder="Which businesses do you support, and how would you like to partner?" /></label>}
     <div className="gl-honeypot" aria-hidden="true"><label>Leave this field empty<input name="company_fax" tabIndex={-1} autoComplete="off" /></label></div>
     <label className="gl-consent"><input name="consent" type="checkbox" required value="yes" /><span>I agree that GoLocal may use these details to contact me about registration and partnership opportunities. See our <Link href="/privacy">privacy notice</Link>.</span></label>
-    {error && <p className="gl-form-error" role="alert">{error} You can also <a href="mailto:pwalia@mba2027.hbs.edu">contact our team</a>.</p>}
+    {error && <p className="gl-form-error" role="alert">{error} You can also <a href="mailto:pulkitwalia099@gmail.com">contact our team</a>.</p>}
     <button className="gl-button" type="submit" disabled={status === "sending"}>{status === "sending" ? "Saving your registration…" : type === "business" ? "Register your business" : "Register your interest"}<span aria-hidden="true">↗</span></button>
     <p className="gl-form-footnote">No payment required. Registration does not activate a booking integration.</p>
   </form>;

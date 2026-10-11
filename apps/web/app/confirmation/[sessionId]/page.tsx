@@ -155,7 +155,7 @@ export default function ConfirmationPage({ params }: { params: Promise<{ session
               </svg>
             </Link>
             <p className="text-xs text-gray-400">
-              Questions? <a href="mailto:pwalia@mba2027.hbs.edu" className="text-amber hover:underline">pwalia@mba2027.hbs.edu</a>
+              Questions? <a href="mailto:pulkitwalia099@gmail.com" className="text-amber hover:underline">pulkitwalia099@gmail.com</a>
             </p>
           </div>
         </div>

@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Elements } from "@stripe/react-stripe-js";
 import { getStripe } from "@/lib/stripe";
 import { StripeCardForm } from "@/components/payment/StripeCardForm";
 import { Card } from "@/components/ui/Card";
 
-export default function BookingPaymentPage({ params }: { params: { jobId: string } }) {
+export default function BookingPaymentPage({ params }: { params: Promise<{ jobId: string }> }) {
+  const { jobId } = use(params);
   const searchParams = useSearchParams();
   const router = useRouter();
   const [confirmed, setConfirmed] = useState(false);
@@ -71,7 +72,7 @@ export default function BookingPaymentPage({ params }: { params: { jobId: string
         <Elements stripe={getStripe()} options={{ clientSecret }}>
           <StripeCardForm
             clientSecret={clientSecret}
-            jobId={params.jobId}
+            jobId={jobId}
             quotedPriceCents={quotedPriceCents}
             onSuccess={handleSuccess}
           />
