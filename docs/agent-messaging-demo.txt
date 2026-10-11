@@ -12,3 +12,5 @@ resources/agent-logo-assets-2026-10-10/openclaw.jpeg
 resources/agent-logo-assets-2026-10-10/heremes.png
 
 Exact original bytes copied to apps/web/public/agents. Cropping of the OpenClaw avatar is presentation-only CSS; source artwork is preserved. Instinct uses a text wordmark as in the supplied deck. Ecosystem copy explicitly describes GoLocal integrations as in development and conditional on the agent and messaging channel. No third-party endorsement or universal live compatibility is claimed.
+
+ChatGPT Dots added at the founder’s request. Text treatment follows the deck’s Dots label, with ChatGPT for clarity. Official product reference: https://openai.com/index/introducing-dots/ . This label does not claim a public GoLocal directory listing or production booking availability.
