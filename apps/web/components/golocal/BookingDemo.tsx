@@ -4,11 +4,11 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const providers = [
-  { name: "Oak Plumbing", initials: "OP", fee: 79, time: "9–11 am", detail: "Earliest morning visit" },
-  { name: "Canyon Plumbing", initials: "CP", fee: 95, time: "10 am–12 pm", detail: "Another morning option" },
-  { name: "Jordan Home Plumbing", initials: "JP", fee: 69, time: "1–3 pm", detail: "Lower visit fee, later arrival" },
+  { name: "Oak Plumbing", fee: 79, time: "9–11 am", rating: "4.9", reviews: 128, bookings: 18, distance: "2.1 miles away", badge: "My choice" },
+  { name: "Canyon Plumbing", fee: 95, time: "10 am–12 pm", rating: "4.8", reviews: 214, bookings: 32, distance: "3.4 miles away", badge: "Most booked nearby" },
+  { name: "Jordan Home Plumbing", fee: 69, time: "10 am–12 pm", rating: "4.7", reviews: 89, bookings: 12, distance: "4.2 miles away", badge: "Lowest visit fee" },
 ];
-const stages = ["Scope", "Compare", "Approve", "Booked"];
+const stages = ["Scope", "Choose", "Booked"];
 const beats = [
   { kind: "request", stage: 0, delay: 0 },
   { kind: "question", stage: 0, delay: 1800 },
@@ -17,17 +17,15 @@ const beats = [
   { kind: "search", stage: 1, delay: 6500 },
   { kind: "options", stage: 1, delay: 2400 },
   { kind: "choice", stage: 1, delay: 6500 },
-  { kind: "approval", stage: 2, delay: 2200 },
-  { kind: "approve", stage: 2, delay: 6500 },
-  { kind: "booking", stage: 3, delay: 1400 },
-  { kind: "confirmed", stage: 3, delay: 2600 },
-  { kind: "done", stage: 3, delay: 2200 },
+  { kind: "booking", stage: 2, delay: 1400 },
+  { kind: "confirmed", stage: 2, delay: 2600 },
+  { kind: "done", stage: 2, delay: 2200 },
 ] as const;
 
 type BeatKind = (typeof beats)[number]["kind"];
 const countThrough = (kind: BeatKind) => beats.findIndex(beat => beat.kind === kind) + 1;
 const stageStarts = stages.map((_, stage) => beats.findIndex(beat => beat.stage === stage) + 1);
-const userBeats = new Set<BeatKind>(["request", "answer", "choice", "approve"]);
+const userBeats = new Set<BeatKind>(["request", "answer", "choice"]);
 
 export default function BookingDemo() {
   const [count, setCount] = useState(1);
@@ -69,7 +67,10 @@ export default function BookingDemo() {
 
   useEffect(() => {
     const panel = transcript.current;
-    if (panel) panel.scrollTo({ top: panel.scrollHeight, behavior: reducedMotion ? "instant" : "smooth" });
+    if (!panel) return;
+    const options = beats[count - 1].kind === "options" ? panel.querySelector<HTMLElement>('[data-demo-beat="options"]') : null;
+    const top = options ? panel.scrollTop + options.getBoundingClientRect().top - panel.getBoundingClientRect().top - 16 : panel.scrollHeight;
+    panel.scrollTo({ top, behavior: reducedMotion ? "instant" : "smooth" });
   }, [count, reducedMotion]);
 
   function replay() {
@@ -89,13 +90,11 @@ export default function BookingDemo() {
       case "request": return <p>Can you book a plumber for my leaking kitchen tap in Salt Lake City tomorrow morning?</p>;
       case "question": return <p>Of course. Send me a photo of the tap showing where it’s leaking.</p>;
       case "answer": return <><figure className="gl-demo-photo"><Image src="/demo/dripping-kitchen-tap.png" alt="Example photo of a chrome single-lever kitchen tap with a droplet at the spout over a stainless steel sink" width={1536} height={1024} sizes="(max-width: 800px) 260px, 300px" /><figcaption>Kitchen tap · Example photo</figcaption></figure><p>Here you go. It keeps dripping even with the handle turned off.</p></>;
-      case "diagnosis": return <><p>I can see the drip at the end of the spout. This looks like a single-lever tap; the cartridge inside may not be sealing properly.</p><p className="gl-demo-diagnosis-followup">I’ll raise a service request for a dripping kitchen tap and attach your photo. The plumber can confirm the cause on the visit.</p><div className="gl-demo-request-tag"><span aria-hidden="true">✓</span> Service request prepared · Photo attached</div></>;
-      case "search": return <div className="gl-demo-activity"><span aria-hidden="true">⌕</span><div><strong>Finding the right local visit</strong><span>Service area → availability → visit pricing</span></div><span className="gl-demo-activity-check" aria-hidden="true">✓</span></div>;
-      case "options": return <><p>I found three options for a leaking-tap diagnostic visit. Oak has the earliest morning window.</p><div className="gl-demo-options">{providers.map((option, index) => <button key={option.name} className={`gl-demo-option ${selected === index ? "is-selected" : ""}`} disabled={count > countThrough("options")} onClick={() => choose(index)} aria-label={`Choose ${option.name}, $${option.fee} visit fee, tomorrow ${option.time}`}><span className="gl-demo-provider-mark" aria-hidden="true">{option.initials}</span><span className="gl-demo-provider-info"><strong>{option.name}</strong><span>Tomorrow · {option.time}</span><small>{option.detail}</small></span><span className="gl-demo-price"><strong>${option.fee}</strong><small>visit fee</small></span><span aria-hidden="true">{selected === index ? "✓" : "↗"}</span></button>)}</div>{count === countThrough("options") && <small className="gl-demo-hint">Try choosing a provider, or watch the demo continue.</small>}</>;
-      case "choice": return <p>{provider.name} works. Let’s book the {provider.time} visit.</p>;
-      case "approval": return <><p>Here’s everything before I book. The visit fee covers diagnosis; any repair quote needs your approval.</p><div className="gl-demo-review"><div><span>YOUR VISIT</span><strong>{provider.name}</strong></div><dl><div><dt>When</dt><dd>Tomorrow, {provider.time}</dd></div><div><dt>Where</dt><dd>Your Salt Lake City home</dd></div><div><dt>Visit fee</dt><dd>${provider.fee}</dd></div></dl><button className="gl-demo-approve" disabled={count > countThrough("approval")} onClick={() => { setCount(countThrough("approve")); setMode("play"); }}>{count > countThrough("approval") ? "Approved in demo ✓" : "Approve example booking →"}</button></div></>;
-      case "approve": return <p>Yes, go ahead. Thank you!</p>;
-      case "booking": return <div className="gl-demo-activity"><span aria-hidden="true">↗</span><div><strong>Sending your approved booking</strong><span>GoLocal → {provider.name}’s scheduling system</span></div><span className="gl-demo-activity-check" aria-hidden="true">✓</span></div>;
+      case "diagnosis": return <><p>I can see the drip at the end of the spout. This looks like a single-lever tap; the cartridge inside may not be sealing properly.</p><p className="gl-demo-diagnosis-followup">I’ve scoped this as a dripping kitchen tap. I’ll use GoLocal to find nearby plumbers who handle this, with morning availability. They can confirm the cause on the visit.</p><div className="gl-demo-request-tag"><span aria-hidden="true">✓</span> Dripping kitchen tap · Photo attached</div></>;
+      case "search": return <div className="gl-demo-mcp-call"><div><span className="gl-demo-mcp-icon" aria-hidden="true">↗</span><strong>GoLocal MCP</strong><span className="gl-demo-mcp-label">DEMO TOOL CALL</span></div><code>search_providers → get_availability</code><p>Dripping kitchen tap · Salt Lake City · Tomorrow AM</p><span className="gl-demo-mcp-result">✓ 3 available providers found</span></div>;
+      case "options": return <><p>These three can help tomorrow morning. Oak is my choice: the highest rating, an earlier slot and a lower fee than Canyon.</p><span className="gl-demo-match-source">Found through GoLocal MCP · Example metrics</span><div className="gl-demo-options">{providers.map((option, index) => <button key={option.name} className={`gl-demo-option gl-demo-vendor ${selected === index ? "is-selected" : ""}`} disabled={count > countThrough("options")} onClick={() => choose(index)} aria-label={`Book ${option.name}, rated ${option.rating} out of 5, ${option.bookings} bookings in the past 7 days, $${option.fee} visit fee, tomorrow ${option.time}`}><span className={`gl-demo-vendor-badge ${index === 0 ? "is-recommended" : ""}`}>{index === 0 && <span aria-hidden="true">✦ </span>}{option.badge}</span><span className="gl-demo-vendor-main"><strong>{option.name}</strong><span className="gl-demo-vendor-rating"><span aria-hidden="true">★</span> {option.rating} <small>({option.reviews})</small></span></span><span className="gl-demo-vendor-stats"><span>{option.bookings} bookings in past 7 days</span><span>{option.distance}</span></span><span className="gl-demo-vendor-book"><span>Tomorrow · {option.time}</span><strong>${option.fee}<small> visit fee</small></strong><span className="gl-demo-vendor-arrow" aria-hidden="true">→</span></span></button>)}</div><small className="gl-demo-hint">Choose a visit to book it. Visit fee covers diagnosis; repairs are quoted separately.</small></>;
+      case "choice": return <p>Book {provider.name} for tomorrow, {provider.time}.</p>;
+      case "booking": return <div className="gl-demo-mcp-call"><div><span className="gl-demo-mcp-icon" aria-hidden="true">↗</span><strong>GoLocal MCP</strong><span className="gl-demo-mcp-label">DEMO TOOL CALL</span></div><code>prepare_booking → confirm_booking</code><p>{provider.name} · Tomorrow, {provider.time} · ${provider.fee} visit</p><span className="gl-demo-mcp-result">✓ Selection received · Booking the visit</span></div>;
       case "confirmed": return <div className="gl-demo-receipt"><span className="gl-demo-receipt-icon" aria-hidden="true">✓</span><span className="gl-mono">EXAMPLE BOOKING CONFIRMED</span><h3>You’re all set.</h3><p>{provider.name} · Tomorrow, {provider.time}</p><div><span>Leaking-tap diagnostic visit</span><strong>${provider.fee}</strong></div><small>Confirmation GL-1042 · Example details</small></div>;
       case "done": return <p>All booked. I’ve got the details right here in our chat whenever you need them. One less thing on your list.</p>;
     }
@@ -110,7 +109,7 @@ export default function BookingDemo() {
       {beats.slice(0, count).map(({ kind }) => {
         const isUser = userBeats.has(kind);
         const isActivity = kind === "search" || kind === "booking";
-        return <div key={kind} className={`gl-demo-message ${isUser ? "gl-demo-message-user" : "gl-demo-message-agent"} ${isActivity ? "gl-demo-message-system" : ""}`}>
+        return <div key={kind} data-demo-beat={kind} className={`gl-demo-message ${isUser ? "gl-demo-message-user" : "gl-demo-message-agent"} ${isActivity ? "gl-demo-message-system" : ""}`}>
           {!isActivity && <span className="gl-demo-speaker">{isUser ? "You" : "Your local agent"}</span>}
           <div className="gl-demo-bubble">{renderBeat(kind)}</div>
           {isUser && kind === latestUserBeat && <span className="gl-imessage-delivered">Delivered</span>}
@@ -121,6 +120,6 @@ export default function BookingDemo() {
     <div className="gl-imessage-composer" aria-hidden="true"><span className="gl-imessage-plus">+</span><span className="gl-imessage-input">iMessage<span>↑</span></span></div>
     <div className="gl-demo-playback"><span className="gl-demo-playback-status" role="status">{complete ? "A request. A conversation. A booking." : playing ? "Watching the booking unfold" : "Explore at your own pace"}</span><div><button onClick={() => complete ? replay() : setMode(playing ? "pause" : "play")} aria-label={complete ? "Replay demo" : playing ? "Pause demo" : "Play demo"}>{complete ? "↻ Replay" : playing ? "Ⅱ Pause" : "▶ Play"}</button>{!complete && <button onClick={() => { setCount(value => Math.min(value + 1, beats.length)); setMode("pause"); }} aria-label="Next message">Next <span aria-hidden="true">→</span></button>}</div></div>
     <div className="gl-demo-progress" aria-hidden="true"><span style={{ width: `${count / beats.length * 100}%` }} /></div>
-    <div className="gl-demo-disclosure">Illustrative iMessage experience. Agent integration in development. Fictional businesses and prices; no real booking is made.</div>
+    <div className="gl-demo-disclosure">Illustrative iMessage experience. Simulated MCP calls, providers, ratings and booking counts. No real booking or charge.</div>
   </div>;
 }
