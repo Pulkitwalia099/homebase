@@ -1,36 +1,23 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GoLocal website
 
-## Getting Started
+Public site for local service businesses, agent companies and channel partners at https://getgolocal.com.
 
-First, run the development server:
+## Development
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The Next.js app lives in `apps/web`. Run `npm ci` there, then `npm run dev`. Build with `npm run build`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Vercel project: `homebase-agent-booking`, team `pulkitwalia099s-projects`. Framework: Next.js. Root directory: `apps/web`. Source repository: `Pulkitwalia099/homebase`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Registration
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`POST /api/waitlist` validates the three audience forms and saves JSON records to the private Vercel Blob store `golocal-registrations`. `BLOB_READ_WRITE_TOKEN` is server-only and supplied by the connected Vercel store. Success is returned only after storage succeeds or an identical email/audience registration already exists. The first registration is retained; subsequent requests do not overwrite it. No email is automatically sent.
 
-## Learn More
+Review registrations in Vercel → Storage → golocal-registrations, or use the authenticated Vercel Blob CLI in a linked checkout. Records are under `registrations/<audience>/`. Keep exported registrations private. Delete individual records when a verified contact requests deletion. Do not commit environment files or registration exports.
 
-To learn more about Next.js, take a look at the following resources:
+The site provides pilot registration, not customer accounts or live service booking. The legacy booking prototype remains in source but public booking pages redirect to the illustrative demo. Production MCP access and business software integrations require separate implementation and authorization.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Brand and research
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Forest `#193C32`, cream `#F5F2E9` and sage `#DDE4D6` come from the supplied pitch deck. The neighborhood art is reused from its cover. The GoLocal symbol was generated for this launch. Orange is reserved for key actions.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See `docs/connector-research-2026-10-10.md` for inspected official sources and the integration sequence. The website's `/connectors` page is the public setup guide.

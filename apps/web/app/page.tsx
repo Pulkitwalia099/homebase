@@ -1,76 +1,31 @@
-"use client";
-
-import { useState } from "react";
-import Navbar from "../components/marketing/Navbar";
-import HeroSection from "../components/marketing/HeroSection";
-import HowItWorks from "../components/marketing/HowItWorks";
-import TaxonomyPreview from "../components/marketing/TaxonomyPreview";
-import ApiPreview from "../components/marketing/ApiPreview";
-import WaitlistCards from "../components/marketing/WaitlistCards";
-import FounderSection from "../components/marketing/FounderSection";
-import Footer from "../components/marketing/Footer";
-import ViewToggle from "../components/marketing/ViewToggle";
-import MachineView from "../components/marketing/MachineView";
-
+import Link from "next/link";
+import Image from "next/image";
+import Navigation from "@/components/golocal/Navigation";
+import Footer from "@/components/golocal/Footer";
+import BookingDemo from "@/components/golocal/BookingDemo";
+import ConnectionMap from "@/components/golocal/ConnectionMap";
+const audiences = [
+  { number: "01", label: "LOCAL BUSINESSES", title: "Meet your next customer’s agent.", copy: "Make your business part of the new way people find and book local services. Start with the software and workflows you already use.", href: "/businesses", cta: "Register your business", icon: "↗" },
+  { number: "02", label: "AGENT COMPANIES", title: "Give your agent a local network.", copy: "Connect to participating businesses through a shared booking layer. Help your users move from a request to a confirmed appointment.", href: "/agents", cta: "Become an agent partner", icon: "⌘" },
+  { number: "03", label: "CHANNEL PARTNERS", title: "Bring your businesses with you.", copy: "Help the businesses you serve reach customers through personal agents. Partner with us on onboarding, integrations and distribution.", href: "/partners", cta: "Explore a partnership", icon: "↔" },
+];
+const faqs = [
+  ["Who can join GoLocal?", "Local service businesses, companies building personal AI agents, and channel partners such as service software platforms, agencies and business networks can register their interest."],
+  ["Where are you starting?", "Our first pilot is focused on plumbing in Salt Lake City. Businesses and partners in other locations or service categories can register so we can understand where to expand next."],
+  ["Do businesses need to change their software?", "Our approach is to connect to the software a business already uses where supported. We review your system, permissions and booking workflow during onboarding. Availability varies by platform and business."],
+  ["Is the booking network live?", "We are onboarding for the initial pilot. Registration starts a conversation with our team. Agent access, supported services and booking operations are agreed before a business goes live."],
+  ["How does pricing work?", "The proposed model is a business-paid fee on completed bookings, with a share for participating software or channel partners. We will confirm pricing, partner terms and eligibility during onboarding before you commit."],
+];
 export default function Home() {
-  const [viewMode, setViewMode] = useState<"human" | "machine">("human");
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "LocalBusiness",
-        name: "HomeBase",
-        description:
-          "AI-powered plumbing services in Boston. Guaranteed pricing, licensed plumbers, instant booking.",
-        url: "https://homebase.ai",
-        areaServed: {
-          "@type": "City",
-          name: "Boston",
-          addressRegion: "MA",
-          addressCountry: "US",
-        },
-        serviceType: "Plumbing",
-        priceRange: "$$",
-      },
-      {
-        "@type": "WebApplication",
-        name: "HomeBase API",
-        url: "https://homebase.ai/developers",
-        applicationCategory: "BusinessApplication",
-        description:
-          "Scope, price, and book plumbing services programmatically via API.",
-      },
-    ],
-  };
-
-  return (
-    <div className={`min-h-screen transition-colors duration-500 ${
-      viewMode === "machine" ? "bg-dark" : "bg-warm-white"
-    }`}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      {viewMode === "human" ? (
-        <>
-          <Navbar showStatusBar />
-          <main>
-            <HeroSection />
-            <HowItWorks />
-            <TaxonomyPreview />
-            <ApiPreview />
-            <WaitlistCards />
-            <FounderSection />
-          </main>
-          <Footer />
-          {/* Spacer so toggle doesn't overlap footer */}
-          <div className="h-20" />
-        </>
-      ) : (
-        <MachineView />
-      )}
-      <ViewToggle mode={viewMode} onToggle={setViewMode} />
-    </div>
-  );
+  return <><Navigation /><main id="main">
+    <section className="gl-hero"><Image className="gl-hero-art" src="/brand/local-services.png" alt="A neighborhood of local service professionals caring for homes, from plumbing to roofing and gardening" fill priority sizes="100vw" /><div className="gl-hero-shade" /><div className="gl-container gl-hero-inner"><div className="gl-hero-copy"><p className="gl-eyebrow gl-eyebrow-light"><span className="gl-live-dot" /> THE NEXT CHAPTER OF LOCAL</p><h1>Local services,<br />ready for the<br /><em>agent era.</em></h1><p className="gl-hero-description">One connection between personal AI agents and the local businesses that get things done.</p><div className="gl-actions"><Link className="gl-button gl-button-orange" href="/register?type=business">Register your business <span aria-hidden="true">↗</span></Link><Link className="gl-hero-link" href="#network">Partner with us <span aria-hidden="true">→</span></Link></div><p className="gl-hero-note">Now welcoming businesses, agent companies and channel partners.</p></div><div className="gl-hero-caption"><span className="gl-caption-star">✳</span><span>Real local expertise.<br /><b>A new way to connect.</b></span></div></div></section>
+    <div className="gl-launch-strip"><div className="gl-container"><span><span className="gl-live-dot" /> STARTING LOCAL. BUILDING TOGETHER.</span><span>Salt Lake City <i>/</i> Plumbing pilot <i>/</i> Open for partners <span aria-hidden="true">↗</span></span></div></div>
+    <section className="gl-section gl-container gl-intro"><p className="gl-eyebrow">A NEW WAY TO FIND LOCAL</p><div><h2>People are asking their agents.<br /><span className="gl-muted">Let’s give them somewhere to book.</span></h2><p>Personal agents are becoming another starting point for everyday services. But booking a local business still means piecing together websites, forms and phone calls.</p><p>GoLocal is building a shared network of participating businesses, with the service information and booking connections agents need to turn a customer’s request into an appointment.</p></div></section>
+    <section className="gl-connection-section"><div className="gl-container"><div className="gl-section-heading"><div><p className="gl-eyebrow">THE SHARED BOOKING LAYER</p><h2>Many agents. Local expertise.<br /><em>One connection.</em></h2></div><p>Explore each part of the network.<br />See what moves between them.</p></div><ConnectionMap /><Link className="gl-text-link" href="/connectors">How the connections work <span aria-hidden="true">↗</span></Link></div></section>
+    <section id="network" className="gl-section gl-network"><div className="gl-container"><div className="gl-section-heading"><div><p className="gl-eyebrow">FIND YOUR PLACE IN THE NETWORK</p><h2>Three ways to go local.</h2></div><p>Great service takes a connected ecosystem.<br />There’s a place for you here.</p></div><div className="gl-audiences">{audiences.map(a => <article key={a.number} className="gl-audience"><div className="gl-audience-top"><span className="gl-mono">{a.number} / {a.label}</span><span className="gl-audience-icon" aria-hidden="true">{a.icon}</span></div><h3>{a.title}</h3><p>{a.copy}</p><Link href={a.href}>{a.cta}<span aria-hidden="true">↗</span></Link></article>)}</div></div></section>
+    <section id="how-it-works" className="gl-section gl-container gl-how"><div><p className="gl-eyebrow">HOW IT COMES TOGETHER</p><h2>A local booking.<br />All the way through.</h2><p className="gl-section-copy">Your agent understands the job. GoLocal connects the request to participating businesses and their booking systems.</p><ol className="gl-process"><li><span>01</span><div><h3>Connect the business</h3><p>Agree on services, coverage, pricing and what customers can book.</p></div></li><li><span>02</span><div><h3>Find the right match</h3><p>Give agents structured options using the provider’s service information and availability.</p></div></li><li><span>03</span><div><h3>Book with approval</h3><p>The customer approves the details. A confirmed appointment goes back to their agent.</p></div></li></ol><Link className="gl-text-link" href="/agents">Explore the agent partnership <span aria-hidden="true">↗</span></Link></div><BookingDemo /></section>
+    <section className="gl-pilot"><div className="gl-container gl-pilot-inner"><div><p className="gl-eyebrow gl-eyebrow-light">OUR FIRST LOCAL CHAPTER</p><h2>Starting in<br /><em>Salt Lake City.</em></h2><p>We’re bringing our first plumbing pilot together with local businesses and partners. Focused coverage first, with room to grow.</p><Link className="gl-button gl-button-cream" href="/register?type=business">Join the pilot <span aria-hidden="true">↗</span></Link></div><div className="gl-pilot-stat"><span className="gl-pilot-number">60<span>+</span></span><h3>plumbing businesses<br />in the pipeline</h3><p>Through partner introductions. Onboarding and live booking access are the next steps.</p><div className="gl-pilot-rule" /><span className="gl-mono">ONE CITY. ONE CATEGORY. A CONNECTED START.</span></div></div></section>
+    <section className="gl-section gl-container gl-faq"><div><p className="gl-eyebrow">A FEW USEFUL ANSWERS</p><h2>Good questions.<br />A clear starting point.</h2><a className="gl-text-link" href="mailto:pwalia@mba2027.hbs.edu">Talk to our team <span aria-hidden="true">↗</span></a></div><div>{faqs.map(([q, a]) => <details key={q}><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}</div></section>
+    <section className="gl-final-cta gl-container"><div><p className="gl-eyebrow">LET’S BUILD THE NEXT LOCAL NETWORK</p><h2>Your business.<br /><em>Their next request.</em></h2></div><div><p>Join the businesses and partners bringing local services to personal agents.</p><Link className="gl-button gl-button-orange" href="/register">Find your way in <span aria-hidden="true">↗</span></Link></div></section>
+  </main><Footer /></>;
 }

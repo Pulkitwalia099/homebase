@@ -1,20 +1,2 @@
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Try Our Plumbing Scoping Demo — AI-Powered Diagnosis",
-  description:
-    "See how HomeBase's AI agent diagnoses plumbing issues in real time. Describe your problem, get an instant scope and guaranteed price quote for Boston plumbing services.",
-  openGraph: {
-    title: "Try Our Plumbing Scoping Demo — AI-Powered Diagnosis",
-    description:
-      "See how HomeBase's AI agent diagnoses plumbing issues in real time. Instant scope and guaranteed price quote.",
-  },
-};
-
-export default function DemoLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return children;
-}
+export const metadata = { title: "Explore the booking journey", description: "An interactive example of how personal agents can connect with local businesses through GoLocal.", alternates: { canonical: "/demo" } };
+export default function Layout({ children }: { children: React.ReactNode }) { return children; }
