@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const providers = [
@@ -8,12 +9,12 @@ const providers = [
   { name: "Jordan Home Plumbing", initials: "JP", fee: 69, time: "1–3 pm", detail: "Lower visit fee, later arrival" },
 ];
 const stages = ["Scope", "Compare", "Approve", "Booked"];
-const stageStarts = [1, 4, 7, 9];
 const beats = [
   { kind: "request", stage: 0, delay: 0 },
   { kind: "question", stage: 0, delay: 1800 },
   { kind: "answer", stage: 0, delay: 3000 },
-  { kind: "search", stage: 1, delay: 1500 },
+  { kind: "diagnosis", stage: 0, delay: 4000 },
+  { kind: "search", stage: 1, delay: 6500 },
   { kind: "options", stage: 1, delay: 2400 },
   { kind: "choice", stage: 1, delay: 6500 },
   { kind: "approval", stage: 2, delay: 2200 },
@@ -24,6 +25,8 @@ const beats = [
 ] as const;
 
 type BeatKind = (typeof beats)[number]["kind"];
+const countThrough = (kind: BeatKind) => beats.findIndex(beat => beat.kind === kind) + 1;
+const stageStarts = stages.map((_, stage) => beats.findIndex(beat => beat.stage === stage) + 1);
 const userBeats = new Set<BeatKind>(["request", "answer", "choice", "approve"]);
 
 export default function BookingDemo() {
@@ -76,19 +79,20 @@ export default function BookingDemo() {
 
   function choose(index: number) {
     setSelected(index);
-    setCount(6);
+    setCount(countThrough("choice"));
     setMode("play");
   }
 
   function renderBeat(kind: BeatKind) {
     switch (kind) {
-      case "request": return <p>Can you book a plumber for my leaking kitchen tap tomorrow morning?</p>;
-      case "question": return <p>Absolutely. Is the water dripping from the tap, or leaking underneath? And which area are you in?</p>;
-      case "answer": return <p>It’s dripping from the tap. I’m in Salt Lake City. Ideally before noon.</p>;
+      case "request": return <p>Can you book a plumber for my leaking kitchen tap in Salt Lake City tomorrow morning?</p>;
+      case "question": return <p>Of course. Send me a photo of the tap showing where it’s leaking.</p>;
+      case "answer": return <><figure className="gl-demo-photo"><Image src="/demo/dripping-kitchen-tap.png" alt="Example photo of a chrome single-lever kitchen tap with a droplet at the spout over a stainless steel sink" width={1536} height={1024} sizes="(max-width: 800px) 260px, 300px" /><figcaption>Kitchen tap · Example photo</figcaption></figure><p>Here you go. It keeps dripping even with the handle turned off.</p></>;
+      case "diagnosis": return <><p>I can see the drip at the end of the spout. This looks like a single-lever tap; the cartridge inside may not be sealing properly.</p><p className="gl-demo-diagnosis-followup">I’ll raise a service request for a dripping kitchen tap and attach your photo. The plumber can confirm the cause on the visit.</p><div className="gl-demo-request-tag"><span aria-hidden="true">✓</span> Service request prepared · Photo attached</div></>;
       case "search": return <div className="gl-demo-activity"><span aria-hidden="true">⌕</span><div><strong>Finding the right local visit</strong><span>Service area → availability → visit pricing</span></div><span className="gl-demo-activity-check" aria-hidden="true">✓</span></div>;
-      case "options": return <><p>I found three options for a leaking-tap diagnostic visit. Oak has the earliest morning window.</p><div className="gl-demo-options">{providers.map((option, index) => <button key={option.name} className={`gl-demo-option ${selected === index ? "is-selected" : ""}`} disabled={count > 5} onClick={() => choose(index)} aria-label={`Choose ${option.name}, $${option.fee} visit fee, tomorrow ${option.time}`}><span className="gl-demo-provider-mark" aria-hidden="true">{option.initials}</span><span className="gl-demo-provider-info"><strong>{option.name}</strong><span>Tomorrow · {option.time}</span><small>{option.detail}</small></span><span className="gl-demo-price"><strong>${option.fee}</strong><small>visit fee</small></span><span aria-hidden="true">{selected === index ? "✓" : "↗"}</span></button>)}</div>{count === 5 && <small className="gl-demo-hint">Try choosing a provider, or watch the demo continue.</small>}</>;
+      case "options": return <><p>I found three options for a leaking-tap diagnostic visit. Oak has the earliest morning window.</p><div className="gl-demo-options">{providers.map((option, index) => <button key={option.name} className={`gl-demo-option ${selected === index ? "is-selected" : ""}`} disabled={count > countThrough("options")} onClick={() => choose(index)} aria-label={`Choose ${option.name}, $${option.fee} visit fee, tomorrow ${option.time}`}><span className="gl-demo-provider-mark" aria-hidden="true">{option.initials}</span><span className="gl-demo-provider-info"><strong>{option.name}</strong><span>Tomorrow · {option.time}</span><small>{option.detail}</small></span><span className="gl-demo-price"><strong>${option.fee}</strong><small>visit fee</small></span><span aria-hidden="true">{selected === index ? "✓" : "↗"}</span></button>)}</div>{count === countThrough("options") && <small className="gl-demo-hint">Try choosing a provider, or watch the demo continue.</small>}</>;
       case "choice": return <p>{provider.name} works. Let’s book the {provider.time} visit.</p>;
-      case "approval": return <><p>Here’s everything before I book. The visit fee covers diagnosis; any repair quote needs your approval.</p><div className="gl-demo-review"><div><span>YOUR VISIT</span><strong>{provider.name}</strong></div><dl><div><dt>When</dt><dd>Tomorrow, {provider.time}</dd></div><div><dt>Where</dt><dd>Your Salt Lake City home</dd></div><div><dt>Visit fee</dt><dd>${provider.fee}</dd></div></dl><button className="gl-demo-approve" disabled={count > 7} onClick={() => { setCount(8); setMode("play"); }}>{count > 7 ? "Approved in demo ✓" : "Approve example booking →"}</button></div></>;
+      case "approval": return <><p>Here’s everything before I book. The visit fee covers diagnosis; any repair quote needs your approval.</p><div className="gl-demo-review"><div><span>YOUR VISIT</span><strong>{provider.name}</strong></div><dl><div><dt>When</dt><dd>Tomorrow, {provider.time}</dd></div><div><dt>Where</dt><dd>Your Salt Lake City home</dd></div><div><dt>Visit fee</dt><dd>${provider.fee}</dd></div></dl><button className="gl-demo-approve" disabled={count > countThrough("approval")} onClick={() => { setCount(countThrough("approve")); setMode("play"); }}>{count > countThrough("approval") ? "Approved in demo ✓" : "Approve example booking →"}</button></div></>;
       case "approve": return <p>Yes, go ahead. Thank you!</p>;
       case "booking": return <div className="gl-demo-activity"><span aria-hidden="true">↗</span><div><strong>Sending your approved booking</strong><span>GoLocal → {provider.name}’s scheduling system</span></div><span className="gl-demo-activity-check" aria-hidden="true">✓</span></div>;
       case "confirmed": return <div className="gl-demo-receipt"><span className="gl-demo-receipt-icon" aria-hidden="true">✓</span><span className="gl-mono">EXAMPLE BOOKING CONFIRMED</span><h3>You’re all set.</h3><p>{provider.name} · Tomorrow, {provider.time}</p><div><span>Leaking-tap diagnostic visit</span><strong>${provider.fee}</strong></div><small>Confirmation GL-1042 · Example details</small></div>;

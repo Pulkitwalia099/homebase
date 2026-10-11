@@ -1,0 +1,13 @@
+GoLocal photo-led booking demo — October 11, 2026
+
+Asset: apps/web/public/demo/dripping-kitchen-tap.png
+Method: built-in image_gen tool; generated example, not a real customer photo.
+
+Final generation prompt:
+Use case: photorealistic-natural. Asset type: example customer photo inside a fictional plumbing booking website demo. Create a realistic ordinary smartphone photograph, landscape 3:2, close-up of a simple chrome single-lever kitchen mixer tap over a stainless steel sink. Show the whole spout and its outlet prominently with one clear small water droplet hanging from the spout outlet and a second falling droplet beneath; the lever is fully lowered in its off position. Plain neutral kitchen counter, soft daylight, ordinary slightly used clean surfaces, subtle water spots. The leak is solely a drip at the end of the spout, not at the base, not a spray or flood. Plausible real plumbing hardware, unbranded. No person, no text, no arrows, no labels, no watermark. Tight composition with faucet in focus; visible off-position handle. This must look like a casually taken useful customer photo, not an advertisement.
+
+Diagnostic grounding:
+https://solutions.moen.com/Article_Library/Kitchen_Faucet%3A_Leaking_From_The_Spout
+Moen's guide associates spout leaks with an internal cartridge. The fictional tap is unbranded, so the demo names no model or replacement part. It describes the visible drip and says the cartridge MAY not be sealing, then leaves diagnosis to the plumber. The supplied caption establishes ongoing dripping with the handle off, which a still image alone cannot establish.
+
+The photo request, customer attachment, assessment and service-request status are scripted demonstration beats. No real image upload, image analysis, complaint submission or provider booking is performed.
