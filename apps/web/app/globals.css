@@ -186,13 +186,13 @@ body{background:var(--gl-cream);color:var(--gl-ink)}
 /* A living neighborhood and a personal-agent conversation. */
 .gl-hero-video{position:absolute;inset:0;width:100%;height:100%;animation:none;pointer-events:none}
 .gl-animated-hero .gl-hero-shade{pointer-events:none}
-.gl-hero-messages{position:absolute;top:38px;left:50%;width:310px;z-index:3;pointer-events:none;font-size:14px;line-height:1.45}
+.gl-hero-messages{position:absolute;top:20px;left:47%;width:275px;z-index:3;pointer-events:none;font-size:12px;line-height:1.45}
 .gl-hero-message-label{color:#edf1e8;display:flex;align-items:center;gap:8px;font-size:9px;font-weight:600;letter-spacing:1.6px;margin:0 0 12px 12px;text-shadow:0 1px 8px #103f3d}
 .gl-hero-message-label>span{display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:#dfe8d2;color:#193c32;font-size:18px;text-shadow:none}
-.gl-hero-request{margin:0 0 0 auto;max-width:290px;background:#317853;color:#fff;padding:14px 18px;border-radius:20px 20px 5px 20px;box-shadow:0 8px 32px #092c3424}
+.gl-hero-request{margin:0 0 0 auto;max-width:265px;background:#317853;color:#fff;padding:11px 15px;border-radius:20px 20px 5px 20px;box-shadow:0 8px 32px #092c3424}
 .gl-hero-delivered{display:block;text-align:right;margin:5px 5px 9px;font-size:9px;color:#eff5e9;text-shadow:0 1px 6px #103f3d}
-.gl-hero-answer{width:270px;min-height:47px;background:#f5f2e9;color:#193c32;border:1px solid #fff8;border-radius:18px 18px 18px 5px;box-shadow:0 8px 30px #092c341c;transition:opacity .3s,transform .3s}
-.gl-hero-answer p{margin:0;padding:12px 16px;line-height:1.5}
+.gl-hero-answer{width:265px;min-height:43px;background:#f5f2e9;color:#193c32;border:1px solid #fff8;border-radius:18px 18px 18px 5px;box-shadow:0 8px 30px #092c341c;transition:opacity .3s,transform .3s}
+.gl-hero-answer p{margin:0;padding:10px 14px;line-height:1.5}
 .gl-hero-messages[data-phase="0"] .gl-hero-answer{opacity:0;transform:translateY(5px)}
 .gl-hero-story-note{display:block;font-size:9px;color:#eef4e6;margin:10px 8px;text-shadow:0 1px 7px #103f3d}
 .gl-hero-typing{display:flex;gap:4px;align-items:center;height:45px;padding:0 18px}
@@ -205,8 +205,8 @@ body{background:var(--gl-cream);color:var(--gl-ink)}
 .gl-hero-compare-bar strong{font-size:17px}.gl-hero-compare-bar p{font-size:12px;margin:5px 0 0;color:#647666}
 .gl-hero-compare-bar>div:last-child{display:flex;gap:8px}.gl-hero-compare-bar button{font:inherit;font-size:12px;padding:12px 16px;border:1px solid #b9c8b5;border-radius:6px;background:transparent;cursor:pointer}.gl-hero-compare-bar button[aria-pressed="true"]{background:#193c32;color:#f5f2e9;border-color:#193c32}
 .gl-hero-preview-note{padding:24px;text-align:center;color:#607566;font-size:13px}.gl-hero-preview-note a{text-decoration:underline}
-@media(min-width:1500px){.gl-hero-messages{left:53%;top:46px;width:330px}}
-@media(max-width:1100px) and (min-width:801px){.gl-hero-messages{left:auto;right:5%;width:280px;top:25px;font-size:12px}.gl-hero-answer{width:245px}.gl-hero-with-message .gl-hero-caption{display:none}}
+@media(min-width:1500px){.gl-hero-messages{left:48%;top:24px;width:290px}}
+@media(max-width:1100px) and (min-width:801px){.gl-hero-messages{left:auto;right:5%;width:255px;top:18px;font-size:11px}.gl-hero-answer{width:245px}.gl-hero-with-message .gl-hero-caption{display:none}}
 @media(max-width:800px){
  .gl-hero-with-message,.gl-hero-with-message .gl-hero-inner{min-height:940px}
  .gl-hero-with-message .gl-hero-art{height:490px!important;object-position:75% bottom}
@@ -216,3 +216,20 @@ body{background:var(--gl-cream);color:var(--gl-ink)}
 }
 @media(max-width:390px){.gl-hero-with-message,.gl-hero-with-message .gl-hero-inner{min-height:990px}.gl-hero-messages{top:500px;width:270px}}
 .gl-animated-hero[data-playing="false"] .gl-hero-typing i{animation-play-state:paused}
+
+/* Software the business already knows, with consistent logo spacing. */
+.gl-business-stack{background:#e8eddf;padding:76px 0;scroll-margin-top:88px}
+.gl-stack-heading{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:38px}
+.gl-stack-heading h2{font-size:clamp(32px,3vw,44px);font-weight:500;line-height:1.2;letter-spacing:-1.5px;margin:0}
+.gl-stack-heading>div:last-child{max-width:420px;justify-self:end}.gl-stack-heading>div:last-child>p{font-size:14px;line-height:1.8;color:var(--gl-muted);margin:0 0 20px}
+.gl-stack-logos{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-top:1px solid #c7d1bd;border-left:1px solid #c7d1bd}
+.gl-stack-logos li{min-height:108px;padding:24px 20px;display:flex;align-items:center;justify-content:center;border-right:1px solid #c7d1bd;border-bottom:1px solid #c7d1bd;background:#f5f2e933}
+.gl-stack-logos img{width:auto;height:auto;max-width:145px;max-height:38px;object-fit:contain;filter:grayscale(1);opacity:.82}
+.gl-stack-note{font-size:10px;line-height:1.7;color:var(--gl-muted);margin:18px 0 0}
+@media(max-width:1000px){.gl-stack-logos{grid-template-columns:repeat(4,minmax(0,1fr))}.gl-stack-heading{gap:40px}}
+@media(max-width:800px){.gl-business-stack{padding:55px 0}.gl-stack-heading{grid-template-columns:1fr;gap:20px;margin-bottom:28px}.gl-stack-heading>div:last-child{justify-self:start;max-width:100%}.gl-stack-heading h2{font-size:33px}.gl-stack-heading>div:last-child>p{font-size:13px}.gl-stack-logos{grid-template-columns:repeat(3,minmax(0,1fr))}.gl-stack-logos li{min-height:90px;padding:18px 13px}.gl-stack-logos img{max-width:100%;max-height:30px}.gl-stack-note{font-size:9px}}
+@media(max-width:480px){.gl-stack-logos{grid-template-columns:repeat(2,minmax(0,1fr))}.gl-stack-logos img{max-width:130px}}
+
+@media(min-width:801px){.gl-animated-hero h1{font-size:clamp(52px,4.8vw,73px)}.gl-animated-hero .gl-hero-description{max-width:350px}}
+
+.gl-stack-logos img[alt="Housecall Pro"],.gl-stack-logos img[alt="ServiceTitan"],.gl-stack-logos img[alt="Simpro"],.gl-stack-logos img[alt="BuildOps"]{filter:brightness(0);opacity:.76}

@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-11",
+  "purpose": "Software examples in business onboarding; not claims of partnership or universal live support",
+  "assets": [
+    {
+      "slug": "housecall-pro",
+      "file": "public/software/housecall-pro.png",
+      "source": "https://www.housecallpro.com/wp-content/uploads/2023/09/housecall-pro-logo-primary-horizontal-grey-999999-836x200-1.png"
+    },
+    {
+      "slug": "servicetitan",
+      "file": "public/software/servicetitan.svg",
+      "source": "https://www.servicetitan.com/static/brand-static-sprite.6073efd1.svg#st-logo"
+    },
+    {
+      "slug": "fieldedge",
+      "file": "public/software/fieldedge.svg",
+      "source": "https://fieldedge.com/wp-content/uploads/2026/03/FieldEdge_Logo.svg"
+    },
+    {
+      "slug": "workiz",
+      "file": "public/software/workiz.png",
+      "source": "https://www.workiz.com/icons/workiz-logo-dark.png"
+    },
+    {
+      "slug": "servicem8",
+      "file": "public/software/servicem8.webp",
+      "source": "https://cdn.prod.website-files.com/57d7ef8b3d16a9a554f037bf/57d7ef8c3d16a9a554f038f0_ServiceM8_Logo_Horizontal.webp"
+    },
+    {
+      "slug": "service-fusion",
+      "file": "public/software/service-fusion.svg",
+      "source": "https://res.cloudinary.com/spiralyze/image/upload/f_svg/v1784706857/servicefusion/1033/logo.svg"
+    },
+    {
+      "slug": "simpro",
+      "file": "public/software/simpro.svg",
+      "source": "https://www.simprogroup.com/user/themes/simpro/images/simpro-wordmark-white.svg"
+    },
+    {
+      "slug": "joblogic",
+      "file": "public/software/joblogic.png",
+      "source": "https://www.joblogic.com/hubfs/JL_LOGO_Main-3.png"
+    },
+    {
+      "slug": "jobber",
+      "file": "public/software/jobber.svg",
+      "source": "https://www.getjobber.com/"
+    },
+    {
+      "slug": "buildops",
+      "file": "public/software/buildops.svg",
+      "source": "https://buildops.com/"
+    },
+    {
+      "slug": "kickserv",
+      "file": "public/software/kickserv.svg",
+      "source": "https://www.kickserv.com/"
+    },
+    {
+      "slug": "commusoft",
+      "file": "public/software/commusoft.svg",
+      "source": "https://www.commusoft.us/"
+    }
+  ]
+}
