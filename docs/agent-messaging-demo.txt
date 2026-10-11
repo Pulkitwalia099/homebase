@@ -1,0 +1,14 @@
+Agent messaging demo — October 11, 2026
+
+The booking demo uses an iMessage-inspired UI with an OpenClaw contact avatar. It is a scripted, illustrative experience, not an installed iMessage app or a claim of live GoLocal compatibility.
+
+Official channel references checked for this revision:
+https://openclaw.ai/integrations — lists iMessage through a macOS bridge.
+https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/ — describes Muse's own app and WhatsApp. The website does not claim Muse currently supports iMessage.
+
+Artwork reused from the founder-supplied deck assets:
+resources/agent-logo-assets-2026-10-10/muse.png
+resources/agent-logo-assets-2026-10-10/openclaw.jpeg
+resources/agent-logo-assets-2026-10-10/heremes.png
+
+Exact original bytes copied to apps/web/public/agents. Cropping of the OpenClaw avatar is presentation-only CSS; source artwork is preserved. Instinct uses a text wordmark as in the supplied deck. Ecosystem copy explicitly describes GoLocal integrations as in development and conditional on the agent and messaging channel. No third-party endorsement or universal live compatibility is claimed.

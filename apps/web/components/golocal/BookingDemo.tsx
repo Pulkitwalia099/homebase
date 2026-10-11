@@ -42,6 +42,7 @@ export default function BookingDemo() {
   const playing = !complete && inView && pageVisible && mode !== "pause" && (mode === "play" || !reducedMotion);
   const stage = beats[count - 1].stage;
   const provider = providers[selected];
+  const latestUserBeat = beats.slice(0, count).filter(beat => userBeats.has(beat.kind)).at(-1)?.kind;
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -96,27 +97,30 @@ export default function BookingDemo() {
       case "approve": return <p>Yes, go ahead. Thank you!</p>;
       case "booking": return <div className="gl-demo-activity"><span aria-hidden="true">↗</span><div><strong>Sending your approved booking</strong><span>GoLocal → {provider.name}’s scheduling system</span></div><span className="gl-demo-activity-check" aria-hidden="true">✓</span></div>;
       case "confirmed": return <div className="gl-demo-receipt"><span className="gl-demo-receipt-icon" aria-hidden="true">✓</span><span className="gl-mono">EXAMPLE BOOKING CONFIRMED</span><h3>You’re all set.</h3><p>{provider.name} · Tomorrow, {provider.time}</p><div><span>Leaking-tap diagnostic visit</span><strong>${provider.fee}</strong></div><small>Confirmation GL-1042 · Example details</small></div>;
-      case "done": return <p>Your visit is confirmed. I have the appointment details here whenever you need them. One less thing on your list.</p>;
+      case "done": return <p>All booked. I’ve got the details right here in our chat whenever you need them. One less thing on your list.</p>;
     }
   }
 
-  return <div ref={root} className="gl-demo gl-conversation-demo">
-    <div className="gl-conversation-header"><div className="gl-demo-agent-icon" aria-hidden="true">✳</div><div><strong>Your personal agent</strong><span>A local booking, powered by GoLocal</span></div><span className="gl-demo-live-badge"><i aria-hidden="true" /> LIVE DEMO</span></div>
+  return <div ref={root} className="gl-demo gl-conversation-demo gl-imessage">
+    <div className="gl-imessage-status" aria-hidden="true"><span>9:41</span><span className="gl-imessage-island" /><span>▮▮▮ <svg width="16" height="12" viewBox="0 0 20 14" fill="none"><path d="M2 5Q10 -1 18 5M5 8Q10 4 15 8M8 11Q10 9 12 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg><span className="gl-imessage-battery" /></span></div>
+    <div className="gl-imessage-contact"><span className="gl-imessage-back" aria-hidden="true">‹</span><div className="gl-imessage-contact-person"><span className="gl-imessage-avatar"><Image src="/agents/openclaw.jpeg" alt="OpenClaw" width={377} height={133} /></span><strong>Your local agent <span aria-hidden="true">›</span></strong><small>OpenClaw · iMessage demo</small></div><span className="gl-imessage-demo-label">DEMO</span></div>
     <div className="gl-demo-steps" aria-label="Demo chapters">{stages.map((label, index) => <button key={label} onClick={() => { setCount(stageStarts[index]); setMode("pause"); }} aria-current={stage === index ? "step" : undefined}><span>{index < stage ? "✓" : index + 1}</span>{label}</button>)}</div>
     <div className="gl-demo-transcript" ref={transcript} role="log" aria-label="Simulated booking conversation" aria-live="polite" aria-relevant="additions" tabIndex={0} onWheel={() => setMode("pause")} onTouchMove={() => setMode("pause")} onKeyDown={event => { if (["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End"].includes(event.key)) setMode("pause"); }}>
-      <div className="gl-demo-conversation-date">A LITTLE LESS LIFE ADMIN</div>
+      <div className="gl-demo-conversation-date">iMessage · Today 9:41 AM</div>
       {beats.slice(0, count).map(({ kind }) => {
         const isUser = userBeats.has(kind);
         const isActivity = kind === "search" || kind === "booking";
         return <div key={kind} className={`gl-demo-message ${isUser ? "gl-demo-message-user" : "gl-demo-message-agent"} ${isActivity ? "gl-demo-message-system" : ""}`}>
-          {!isActivity && <span className="gl-demo-speaker">{isUser ? "YOU" : "YOUR AGENT"}</span>}
+          {!isActivity && <span className="gl-demo-speaker">{isUser ? "You" : "Your local agent"}</span>}
           <div className="gl-demo-bubble">{renderBeat(kind)}</div>
+          {isUser && kind === latestUserBeat && <span className="gl-imessage-delivered">Delivered</span>}
         </div>;
       })}
       {playing && <div className="gl-demo-typing" aria-hidden="true"><span /><span /><span /><small>{userBeats.has(beats[count].kind) ? "Your reply" : "Your agent"}</small></div>}
     </div>
+    <div className="gl-imessage-composer" aria-hidden="true"><span className="gl-imessage-plus">+</span><span className="gl-imessage-input">iMessage<span>↑</span></span></div>
     <div className="gl-demo-playback"><span className="gl-demo-playback-status" role="status">{complete ? "A request. A conversation. A booking." : playing ? "Watching the booking unfold" : "Explore at your own pace"}</span><div><button onClick={() => complete ? replay() : setMode(playing ? "pause" : "play")} aria-label={complete ? "Replay demo" : playing ? "Pause demo" : "Play demo"}>{complete ? "↻ Replay" : playing ? "Ⅱ Pause" : "▶ Play"}</button>{!complete && <button onClick={() => { setCount(value => Math.min(value + 1, beats.length)); setMode("pause"); }} aria-label="Next message">Next <span aria-hidden="true">→</span></button>}</div></div>
     <div className="gl-demo-progress" aria-hidden="true"><span style={{ width: `${count / beats.length * 100}%` }} /></div>
-    <div className="gl-demo-disclosure">Simulated conversation. Fictional businesses and prices. No real booking is made.</div>
+    <div className="gl-demo-disclosure">Illustrative iMessage experience. Agent integration in development. Fictional businesses and prices; no real booking is made.</div>
   </div>;
 }
