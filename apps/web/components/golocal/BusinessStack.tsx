@@ -20,8 +20,8 @@ export default function BusinessStack() {
   return <section className="gl-business-stack" aria-labelledby="business-stack-title">
     <div className="gl-container">
       <div className="gl-stack-heading">
-        <div><p className="gl-eyebrow">YOUR BUSINESS. YOUR TOOLS.</p><h2 id="business-stack-title">Works with your<br /><em>existing tech stack.</em></h2></div>
-        <div><p>Keep the software your team knows. We’re building connections to the tools local businesses already use for scheduling, dispatch and customer management.</p><Link className="gl-text-link" href="/register?type=business">Tell us what you use <span aria-hidden="true">↗</span></Link></div>
+        <div><p className="gl-eyebrow">FOR HOME-SERVICE BUSINESSES</p><h2 id="business-stack-title">Works with your <br /><em>existing tech stack.</em></h2></div>
+        <div><p>Your business keeps its existing scheduling, dispatch and customer-management tools. GoLocal connects supported systems to the personal agents your customers use.</p><Link className="gl-text-link" href="/register?type=business">Tell us what you use <span aria-hidden="true">↗</span></Link></div>
       </div>
       <ul className="gl-stack-logos" aria-label="Business software platforms">
         {platforms.map(([name, file]) => <li key={name}><Image src={`/software/${file}`} alt={name} width={180} height={52} unoptimized /></li>)}

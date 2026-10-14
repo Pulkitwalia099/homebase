@@ -4,15 +4,17 @@ export type Registration = {
   type: string; name: string; email: string; company: string; website: string;
   category: string; location: string; software: string; use_case: string;
   consent: boolean; consent_version: string; created_at: string; source: string;
+  design_partner?: boolean;
+  credit?: { amount_cents: number; currency: string; status: string; redemption: string };
 };
-const audiences: Record<string, string> = { business: "Business", agent: "Agent partner", partner: "Channel partner" };
+const audiences: Record<string, string> = { customer: "Early customer", business: "Business", agent: "Agent partner", partner: "Channel partner" };
 export function notificationMessage(record: Registration) {
   const audience = audiences[record.type] || "Registration";
   return {
     from: "GoLocal <notifications@getgolocal.com>",
     to: ["pulkitwalia099@gmail.com"],
     reply_to: record.email,
-    subject: `[GoLocal] ${audience} registration — ${record.company.replace(/[\r\n]/g, " ")}`,
+    subject: `[GoLocal] ${audience} registration — ${(record.company || record.name).replace(/[\r\n]/g, " ")}`,
     text: ["New registration on getgolocal.com", "", ...[
       ["Audience", audience], ["Name", record.name], ["Email", record.email],
       ["Company", record.company], ["Website", record.website], ["Service category", record.category],
@@ -20,6 +22,7 @@ export function notificationMessage(record: Registration) {
       ["Partnership / use case", record.use_case], ["Consent", record.consent ? "Yes" : "No"],
       ["Consent version", record.consent_version], ["Submitted at (UTC)", record.created_at],
       ["Source", record.source],
+      ...(record.type === 'customer' ? [["Design partner", record.design_partner ? "Yes — wants to share feedback" : "Early customer"], ["Credit", record.credit ? `$${record.credit.amount_cents / 100} ${record.credit.currency} ${record.credit.status}; ${record.credit.redemption}` : "Not provided"]] : []),
     ].map(([label, value]) => `${label}: ${value || "Not provided"}`), "", "Reply to this email to contact the registrant."].join("\n"),
     headers: { Importance: "high", "X-Priority": "1" },
     tags: [{ name: "audience", value: record.type }],

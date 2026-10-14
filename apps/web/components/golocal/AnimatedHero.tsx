@@ -50,9 +50,9 @@ export default function AnimatedHero({ variant = "message" }: { variant?: "messa
       <div className="gl-hero-copy">
         <p className="gl-eyebrow gl-eyebrow-light"><span className="gl-live-dot" /> THE NEXT CHAPTER OF LOCAL</p>
         <h1>Local services,<br />ready for the<br /><em>agent era.</em></h1>
-        <p className="gl-hero-description">One connection between personal AI agents and the local businesses that get things done.</p>
-        <div className="gl-actions"><Link className="gl-button gl-button-orange" href="/register?type=business">Register your business <span aria-hidden="true">↗</span></Link><Link className="gl-hero-link" href="/#network">Partner with us <span aria-hidden="true">→</span></Link></div>
-        <p className="gl-hero-note">Now welcoming businesses, agent companies and channel partners.</p>
+        <p className="gl-hero-description">GoLocal works with your personal AI agent to book services in your local community.</p>
+        <div className="gl-actions"><Link className="gl-button gl-button-orange" href="/demo">Try a demo <span aria-hidden="true">↗</span></Link><Link className="gl-hero-link" href="/businesses">For local businesses <span aria-hidden="true">→</span></Link></div>
+        <p className="gl-hero-note">Early customer pilot and business onboarding now open.</p>
       </div>
       <div className="gl-hero-caption"><span className="gl-caption-star">✳</span><span>Real local expertise.<br /><b>A new way to connect.</b></span></div>
     </div>
@@ -65,6 +65,7 @@ export default function AnimatedHero({ variant = "message" }: { variant?: "messa
       </div>
       <span className="gl-hero-story-note">A little look at what’s possible.</span>
     </div>}
+    <div className="gl-hero-mobile-media" aria-hidden="true" />
     {motion && !failed && <button className="gl-hero-motion-control" type="button" onClick={() => { if (!playing) { setPaused(false); void video.current?.play().catch(() => setPlaying(false)); } else setPaused(true); }} aria-label={playing ? "Pause hero animation" : "Play hero animation"}>
       <span aria-hidden="true">{playing ? "Ⅱ" : "▶"}</span><span>{playing ? "Pause" : "Play"}</span>
     </button>}

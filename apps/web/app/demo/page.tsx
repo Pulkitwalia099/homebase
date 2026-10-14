@@ -1,5 +1,6 @@
-import Navigation from "@/components/golocal/Navigation";
-import Footer from "@/components/golocal/Footer";
-import AgentEcosystem from "@/components/golocal/AgentEcosystem";
-import BookingDemo from "@/components/golocal/BookingDemo";
-export default function Page() { return <><Navigation /><main id="main" className="gl-container gl-demo-page"><p className="gl-eyebrow">EXPLORE THE BOOKING JOURNEY</p><h1>Your local agent.<br /><em>Already in your messages.</em></h1><p>A text. A photo. A local visit sorted. Watch this illustrative iMessage conversation with an OpenClaw agent, compare providers and tap your choice to book the example visit.</p><BookingDemo /><AgentEcosystem /></main><Footer /></>; }
+import Link from 'next/link';
+import Navigation from '@/components/golocal/Navigation';
+import Footer from '@/components/golocal/Footer';
+import PilotDemo from '@/components/golocal/PilotDemo';
+export const metadata = { title: 'Try GoLocal · A plumber, through your agent', description: 'Try a quick plumbing demo: scope a leak, compare sample plumbers and prices, and confirm an example visit immediately.', alternates: { canonical: '/demo' } };
+export default function Page() { return <><Navigation /><main id="main"><section className="gl-container gl-try-hero"><div><p className="gl-eyebrow">A LITTLE LESS BACK-AND-FORTH</p><h1>A tap leak.<br /><em>A local visit sorted.</em></h1></div><div><p>Try the journey in a few clicks. Then connect GoLocal to your personal agent and try it in a conversation.</p><Link className="gl-text-link" href="/connectors">Connect your agent today ↗</Link></div></section><section className="gl-container gl-playground-section"><PilotDemo /></section><section className="gl-container gl-credit-banner"><div><p className="gl-eyebrow">HELP SHAPE WHAT COMES NEXT</p><h2>Your agent.<br /><em>Your local connection.</em></h2><p>Our pilot is live and onboarding customers. Connect your agent or join to help shape local bookings in your area.</p></div><Link className="gl-button gl-button-orange" href="/register?type=customer">Join the live pilot ↗</Link></section></main><Footer /></>; }
