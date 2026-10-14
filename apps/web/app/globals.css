@@ -298,3 +298,17 @@ body{background:var(--gl-cream);color:var(--gl-ink)}
 
 .gl-stack-heading{grid-template-columns:1fr}
 .gl-stack-heading>div:only-child{justify-self:start;max-width:none}
+
+.gh-setup-value{align-self:center;max-width:590px}.gh-setup .gh-setup-value p{font-size:15px;line-height:1.85}@media(max-width:800px){.gh-setup .gh-setup-value p{font-size:14px}}
+
+/* Readable section hierarchy: display titles, section labels, supporting headings. */
+.gl-eyebrow{font-size:16px;line-height:1.5;letter-spacing:.3px}
+.gh-home .gl-eyebrow{font-size:18px;line-height:1.5;font-weight:600;letter-spacing:.2px;text-transform:none}
+.gh-example>div:first-child>.gl-eyebrow,.gh-business-intro>div>.gl-eyebrow{font-size:18px;line-height:1.5;letter-spacing:.2px;margin-bottom:20px}
+.gh-example h2,.gh-business-intro h2,.gh-closing h2{font-size:48px;line-height:1.12;letter-spacing:-1.8px}
+.gh-setup h2{font-size:42px;line-height:1.15;letter-spacing:-1.5px}
+.gh-business-value h3{font-size:20px;line-height:1.4;letter-spacing:-.3px}
+.gh-business-value p{font-size:14px;line-height:1.8}
+.gh-agents>div:first-child h2{font-size:28px;line-height:1.25}
+.gh-businesses .gl-stack-heading h2{font-size:30px;line-height:1.25;letter-spacing:-.8px}
+@media(max-width:800px){.gh-home .gl-eyebrow,.gh-example>div:first-child>.gl-eyebrow,.gh-business-intro>div>.gl-eyebrow{font-size:17px}.gh-example h2,.gh-business-intro h2,.gh-closing h2{font-size:38px;line-height:1.15;letter-spacing:-1.3px}.gh-setup h2{font-size:35px;letter-spacing:-1px}.gh-businesses .gl-stack-heading h2{font-size:27px}.gh-business-value h3{font-size:19px}.gh-agents>div:first-child h2{font-size:26px}}
