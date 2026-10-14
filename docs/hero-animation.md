@@ -12,3 +12,8 @@ To replace a clip, preserve the composition and empty left side, export H.264/yu
 ## Option A animation review · October 13, 2026
 
 The warm and spacious homepage retains the original 8-second hero-message.mp4 worker animation in a separate right-hand panel. A compact lower-corner personal-agent message replaces the static caption: request, delivered/typing, then the agent reply. It follows video currentTime, so pausing pauses the story and every loop restarts it. Reduced-motion and video-error views show the complete conversation as static text. No new video generation or credits were used.
+
+
+## Clearer product messaging · October 13, 2026
+
+The founder requested removal of the ambiguous personal-agent bubble from the homepage. The overlay and its text-time updates are removed; the original worker footage, looping playback, pause/resume, reduced-motion preference and image fallback remain. The separate hero-preview experiment is preserved as historical comparison.

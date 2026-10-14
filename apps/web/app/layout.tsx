@@ -5,9 +5,9 @@ const dmSans = DM_Sans({ subsets: ["latin"], weight: ["400", "500", "600", "700"
 const jetBrainsMono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-jetbrains" });
 export const metadata: Metadata = {
   metadataBase: new URL("https://getgolocal.com"),
-  title: { default: "GoLocal — Local services, ready for the agent era", template: "%s | GoLocal" },
-  description: "GoLocal connects personal AI agents with participating local businesses. Register your business, become an agent partner, or bring your network as a channel partner.",
-  openGraph: { type: "website", siteName: "GoLocal", locale: "en_US", title: "GoLocal — Local services, ready for the agent era", description: "One connection between personal AI agents and the local businesses that get things done." },
+  title: { default: "GoLocal — Your AI agent, connected to local services", template: "%s | GoLocal" },
+  description: "Connect your personal AI agent to local services. GoLocal gives agents a way to find, book and manage local work, and businesses a new customer growth channel.",
+  openGraph: { type: "website", siteName: "GoLocal", locale: "en_US", title: "GoLocal — Your AI agent, connected to local services", description: "Your AI agent, connected to the real world. One GoLocal connection to local-service discovery and booking." },
   twitter: { card: "summary_large_image" },
   icons: { icon: "/brand/golocal-symbol.png", apple: "/brand/golocal-symbol.png" },
   robots: { index: true, follow: true },

@@ -11,7 +11,7 @@ export default function AgentEcosystem() {
       <span className="gl-agent-brand gl-agent-brand-openclaw"><Image src="/agents/openclaw.jpeg" alt="OpenClaw" width={377} height={133} /></span>
       <span className="gl-agent-brand gl-agent-brand-hermes"><Image src="/agents/hermes.png" alt="" width={554} height={554} /><span>Hermes</span></span>
     </div>
-    <p className="gl-agent-ecosystem-copy">Stay with the personal agent you already use. GoLocal connects local services to a growing agent ecosystem.</p>
+    <p className="gl-agent-ecosystem-copy">One GoLocal connection gives your personal agent a way to discover local businesses and arrange services. Keep using the agent and conversation you know.</p>
     <small>* Coming soon. Availability depends on the agent and supported messaging channel.</small>
   </div>;
 }
