@@ -20,7 +20,7 @@ export default function BusinessStack() {
     <div className="gl-container">
       <div className="gl-stack-heading">
         <div><p className="gl-eyebrow">FOR HOME-SERVICE BUSINESSES</p><h2 id="business-stack-title">Works with your <br /><em>existing tech stack.</em></h2></div>
-        
+
       </div>
       <ul className="gl-stack-logos" aria-label="Business software platforms">
         {platforms.map(([name, file]) => <li key={name}><Image src={`/software/${file}`} alt={name} width={180} height={52} unoptimized /></li>)}
