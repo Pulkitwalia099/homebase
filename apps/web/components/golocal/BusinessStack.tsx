@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 const platforms = [
   ["Housecall Pro", "housecall-pro.png"],
@@ -21,7 +20,7 @@ export default function BusinessStack() {
     <div className="gl-container">
       <div className="gl-stack-heading">
         <div><p className="gl-eyebrow">FOR HOME-SERVICE BUSINESSES</p><h2 id="business-stack-title">Works with your <br /><em>existing tech stack.</em></h2></div>
-        <div><p>One GoLocal connection adds an agent-driven customer channel to your existing scheduling, dispatch and customer-management tools.</p><Link className="gl-text-link" href="/register?type=business">Tell us what you use <span aria-hidden="true">↗</span></Link></div>
+        
       </div>
       <ul className="gl-stack-logos" aria-label="Business software platforms">
         {platforms.map(([name, file]) => <li key={name}><Image src={`/software/${file}`} alt={name} width={180} height={52} unoptimized /></li>)}

@@ -295,3 +295,5 @@ body{background:var(--gl-cream);color:var(--gl-ink)}
 .gh-business-intro>div>.gl-eyebrow,.gh-example>div:first-child>.gl-eyebrow{font-size:10px;line-height:1.5;color:var(--gl-green);margin-bottom:18px}
 .gh-business-value{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:45px;margin-top:30px;padding-bottom:10px}
 @media(max-width:800px){.gh-setup{grid-template-columns:1fr;gap:30px;padding-top:40px;padding-bottom:40px}.gh-setup h2{font-size:32px}.gh-setup ol{grid-template-columns:1fr;gap:24px}.gh-business-value{grid-template-columns:1fr;gap:23px;margin-top:30px;padding-bottom:0}.gh-pilot-progress{max-width:330px}.gh-business-intro h2{font-size:35px}}
+
+.gl-stack-heading{grid-template-columns:1fr}
